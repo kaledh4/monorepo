@@ -29,7 +29,7 @@ body {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 10px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .header p {
@@ -41,10 +41,32 @@ body {
 .timestamp {
   font-size: 0.9rem;
   opacity: 0.8;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   padding: 8px 16px;
   border-radius: 20px;
   display: inline-block;
+}
+
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(66, 153, 225, 0.2);
+  border: 1px solid rgba(66, 153, 225, 0.4);
+  color: #90cdf4;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.install-btn:hover {
+  background: rgba(66, 153, 225, 0.3);
+  border-color: rgba(66, 153, 225, 0.6);
+  transform: translateY(-2px);
 }
 
 .dashboard-grid {
@@ -61,14 +83,14 @@ body {
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(74, 85, 104, 0.3);
 }
 
 .dashboard-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card-icon {
@@ -88,27 +110,31 @@ body {
   margin-bottom: 16px;
 }
 
-.repo-link {
+.launch-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #90cdf4;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 16px;
+  color: #4299e1;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 10px 20px;
   border-radius: 8px;
-  transition: background-color 0.2s;
+  transition: all 0.3s ease;
+  background: rgba(66, 153, 225, 0.1);
+  border: 1px solid rgba(66, 153, 225, 0.3);
 }
 
-.repo-link:hover {
-  background-color: rgba(144, 205, 244, 0.1);
+.dashboard-card:hover .launch-badge {
+  background: rgba(66, 153, 225, 0.2);
+  border-color: rgba(66, 153, 225, 0.5);
+  color: #63b3ed;
 }
 
 .content {
   background: rgba(45, 55, 72, 0.95);
   border-radius: 16px;
   padding: 40px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(74, 85, 104, 0.3);
 }
@@ -157,23 +183,23 @@ body {
   .container {
     padding: 15px;
   }
-  
+
   .header h1 {
     font-size: 2rem;
   }
-  
+
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .content {
     padding: 25px;
   }
-  
+
   .content h1 {
     font-size: 2rem;
   }
-  
+
   .content h2 {
     font-size: 1.5rem;
   }

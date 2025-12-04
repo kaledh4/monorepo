@@ -1,17 +1,41 @@
 {
-  "meta": {
-    "generated_at": "2025-11-27T08:49:32.780182",
-    "ticker": "^SPX",
-    "expiration": "2026-01-02"
+  "timestamp": "2025-12-04T12:50:10.062364",
+  "markets": {
+    "btc": 93470.421875,
+    "eth": 3203.640380859375,
+    "sp500": 6849.72021484375
   },
-  "analysis": {
-    "current_price": 6812.61,
-    "market_expected_price": 6810.81,
-    "sentiment": "Bearish",
-    "bullish_probability": 23.5,
-    "expected_range_68pct": {
-      "low": 6805.41,
-      "high": 6827.03
+  "ai_research": [
+    {
+      "title": "SkillFactory: Self-Distillation For Learning Cognitive Behaviors",
+      "summary": "Reasoning models leveraging long chains of thought employ various cognitive skills, such as verification of their answers, backtracking, retrying by an alternate method, and more. Previous work has sh...",
+      "date": "2025-12-03",
+      "link": "http://arxiv.org/abs/2512.04072v1"
+    },
+    {
+      "title": "Learning Steerable Clarification Policies with Collaborative Self-play",
+      "summary": "To handle underspecified or ambiguous queries, AI assistants need a policy for managing their uncertainty to determine (a) when to guess the user intent and answer directly, (b) when to enumerate and ...",
+      "date": "2025-12-03",
+      "link": "http://arxiv.org/abs/2512.04068v1"
+    },
+    {
+      "title": "Fare Comparison App of Uber, Ola and Rapido",
+      "summary": "In todays increasing world, it is very important to have good hailing services like Ola, Uber, and Rapido as it is very essential for our daily transportation. Users often face difficulties in choosin...",
+      "date": "2025-12-03",
+      "link": "http://arxiv.org/abs/2512.04065v1"
+    },
+    {
+      "title": "Eval Factsheets: A Structured Framework for Documenting AI Evaluations",
+      "summary": "The rapid proliferation of benchmarks has created significant challenges in reproducibility, transparency, and informed decision-making. However, unlike datasets and models -- which benefit from struc...",
+      "date": "2025-12-03",
+      "link": "http://arxiv.org/abs/2512.04062v1"
+    },
+    {
+      "title": "Closing the problem of which causal structures of up to six total nodes have a classical-quantum gap",
+      "summary": "The discovery of Bell that there exist quantum correlations that cannot be reproduced classically is one of the most important in the foundations of quantum mechanics, as well as having practical impl...",
+      "date": "2025-12-03",
+      "link": "http://arxiv.org/abs/2512.04058v1"
     }
-  }
+  ],
+  "analysis": "Market analysis temporarily unavailable."
 }

@@ -103,7 +103,25 @@ jobs:
       - name: Install dependencies
         run: npm install
       
+      - name: Setup Python (for economic-compass)
+        if: matrix.app == 'economic-compass'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Build economic-compass with Python
+        if: matrix.app == 'economic-compass'
+        run: |
+          cd apps/economic-compass
+          pip install -r requirements.txt
+          python build.py
+          # The build.py creates a 'public/' folder with rendered HTML
+          mkdir -p ../../dist/apps/economic-compass
+          cp -r public/* ../../dist/apps/economic-compass/
+          echo "✅ Economic Compass built with Python"
+      
       - name: Build ${{ matrix.app }}
+        if: matrix.app != 'economic-compass'
         run: |
           npm run build:${{ matrix.app }}
       
