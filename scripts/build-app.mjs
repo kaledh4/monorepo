@@ -74,8 +74,9 @@ console.log(`Source: ${sourceDir}`);
 console.log(`Destination: ${distDir}`);
 
 // Special handling for different app structures
-if (appName === 'economic-compass') {
-    // economic-compass: files in app/static and app/templates
+// Special handling for different app structures
+if (appName === 'economic-compass' || appName === 'the-map') {
+    // economic-compass/the-map: files in app/static and app/templates
     const staticDir = path.join(sourceDir, 'app', 'static');
     const templatesDir = path.join(sourceDir, 'app', 'templates');
 
@@ -96,8 +97,8 @@ if (appName === 'economic-compass') {
             }
         });
     }
-} else if (appName === 'ai-race') {
-    // ai-race: files in AI_RACE_CLEAN-main subdirectory
+} else if (appName === 'ai-race' || appName === 'the-frontier') {
+    // ai-race/the-frontier: files in AI_RACE_CLEAN-main subdirectory
     const subDir = path.join(sourceDir, 'AI_RACE_CLEAN-main');
     if (fs.existsSync(subDir)) {
         console.log('Copying from AI_RACE_CLEAN-main...');
