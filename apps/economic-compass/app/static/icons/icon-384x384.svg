@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="384" viewBox="0 0 384 384">
+  <rect width="384" height="384" fill="#0f0f13" rx="96"/>
+  <circle cx="192" cy="192" r="120" fill="#3b82f6" opacity="0.8"/>
+  <path d="M192 132 L192 252 M132 192 L252 192" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  <text x="192" y="330" font-family="Arial, sans-serif" font-size="48" fill="white" text-anchor="middle" font-weight="bold">EC</text>
+</svg>

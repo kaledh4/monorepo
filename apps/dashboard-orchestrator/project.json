@@ -1,0 +1,48 @@
+{
+    "name": "dashboard-orchestrator",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/dashboard-orchestrator",
+    "projectType": "application",
+    "tags": [
+        "type:app",
+        "scope:dashboard"
+    ],
+    "targets": {
+        "build": {
+            "executor": "@nx/web:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/apps/dashboard-orchestrator",
+                "index": "apps/dashboard-orchestrator/index.html",
+                "main": "apps/dashboard-orchestrator/scripts/generate-brief.js",
+                "tsConfig": "apps/dashboard-orchestrator/tsconfig.app.json",
+                "assets": [
+                    "apps/dashboard-orchestrator/manifest.json",
+                    "apps/dashboard-orchestrator/sw.js",
+                    "apps/dashboard-orchestrator/styles.css",
+                    "apps/dashboard-orchestrator/briefs"
+                ]
+            }
+        },
+        "serve": {
+            "executor": "@nx/web:dev-server",
+            "options": {
+                "buildTarget": "dashboard-orchestrator:build",
+                "port": 4202
+            }
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "gh-pages -d dist/apps/dashboard-orchestrator -r https://github.com/yourusername/dashboard-orchestrator.git"
+            }
+        }
+    },
+    "implicitDependencies": [
+        "shared-keys",
+        "shared-pwa",
+        "data-layer"
+    ]
+}

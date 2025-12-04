@@ -1,0 +1,4 @@
+dev_requirements.md
+__pycache__/
+*.pyc
+.env

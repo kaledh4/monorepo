@@ -1,0 +1,48 @@
+{
+    "name": "hyper-analytical",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/hyper-analytical",
+    "projectType": "application",
+    "tags": [
+        "type:app",
+        "scope:dashboard"
+    ],
+    "targets": {
+        "build": {
+            "executor": "@nx/web:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/apps/hyper-analytical",
+                "index": "apps/hyper-analytical/index.html",
+                "main": "apps/hyper-analytical/macro_analysis.py",
+                "tsConfig": "apps/hyper-analytical/tsconfig.app.json",
+                "assets": [
+                    "apps/hyper-analytical/manifest.json",
+                    "apps/hyper-analytical/service-worker.js",
+                    "apps/hyper-analytical/styles.css",
+                    "apps/hyper-analytical/icons"
+                ]
+            }
+        },
+        "serve": {
+            "executor": "@nx/web:dev-server",
+            "options": {
+                "buildTarget": "hyper-analytical:build",
+                "port": 4205
+            }
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "gh-pages -d dist/apps/hyper-analytical -r https://github.com/yourusername/hyper-analytical.git"
+            }
+        }
+    },
+    "implicitDependencies": [
+        "shared-keys",
+        "shared-pwa",
+        "data-layer"
+    ]
+}

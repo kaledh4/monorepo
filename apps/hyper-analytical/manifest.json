@@ -1,0 +1,44 @@
+{
+  "name": "Hyper Analytical - Crypto Macro Intelligence",
+  "short_name": "HyperAnalytical",
+  "description": "Real-time crypto market intelligence with AI-powered macro analysis. Hyper Analytical risk metrics and daily actionable insights.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0e14",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "shortcuts": [
+    {
+      "name": "Daily Analysis",
+      "short_name": "Analysis",
+      "description": "View today's market analysis",
+      "url": "./index.html#analysis",
+      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": [],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

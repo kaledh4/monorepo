@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Market Intelligence Dashboard with Daily Updates">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Market Intelligence Dashboard</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="pulse-loader">
+                <div class="pulse-ring"></div>
+                <div class="pulse-core"></div>
+            </div>
+            <h2 class="loading-text">Loading Intelligence...</h2>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="brand">
+                    <div class="brand-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="url(#gradient)" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <defs>
+                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#7b2ff7;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="brand-text">
+                        <h1>Market Intelligence</h1>
+                        <span class="subtitle">Powered by Grok AI</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="refresh-btn" class="icon-btn" title="Refresh Data">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </button>
+                    <button id="header-install-btn" class="icon-btn" title="Install App" style="display: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </button>
+                    <button id="lang-toggle" class="icon-btn" title="Switch Language">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        <span class="lang-text">AR</span>
+                    </button>
+                    <button id="settings-btn" class="icon-btn" title="Settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="last-updated" id="last-updated">
+                <span class="status-indicator"></span>
+                Last updated: Loading...
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Stats Overview -->
+            <section class="stats-grid">
+                <div class="stat-card shimmer">
+                    <div class="stat-icon markets">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" />
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Market Trends</h3>
+                        <p class="stat-value" id="trends-count">--</p>
+                        <span class="stat-label">Active Insights</span>
+                    </div>
+                </div>
+
+                <div class="stat-card shimmer">
+                    <div class="stat-icon insights">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3>AI Insights</h3>
+                        <p class="stat-value" id="insights-count">--</p>
+                        <span class="stat-label">Generated Today</span>
+                    </div>
+                </div>
+
+                <div class="stat-card shimmer">
+                    <div class="stat-icon updates">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Updates</h3>
+                        <p class="stat-value" id="updates-count">--</p>
+                        <span class="stat-label">This Week</span>
+                    </div>
+                </div>
+
+                <div class="stat-card shimmer">
+                    <div class="stat-icon sentiment">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Sentiment</h3>
+                        <p class="stat-value" id="sentiment-value">--</p>
+                        <span class="stat-label">Overall Market</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Daily Digest -->
+            <section class="digest-section">
+                <div class="section-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        Daily Digest
+                    </h2>
+                    <span class="badge">AI Generated</span>
+                </div>
+                <div id="digest-content" class="digest-content">
+                    <div class="loading-skeleton">
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Market Analysis -->
+            <section id="analysis-container" class="analysis-section" style="display: none;">
+                <!-- Analysis content injected via JS -->
+            </section>
+
+            <!-- Insights Feed -->
+            <section class="insights-section">
+                <div class="section-header">
+                    <h2>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Latest Insights
+                    </h2>
+                    <select id="filter-select" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="market">Market Analysis</option>
+                        <option value="tech">Technology</option>
+                        <option value="finance">Finance</option>
+                        <option value="trends">Trends</option>
+                    </select>
+                </div>
+                <div id="insights-feed" class="insights-feed">
+                    <!-- Insights will be loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- PWA Install Prompt -->
+        <div id="install-prompt" class="install-prompt" style="display: none;">
+            <div class="install-content">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <div class="install-text">
+                    <h3>Install App</h3>
+                    <p>Add to home screen for quick access</p>
+                </div>
+                <div class="install-actions">
+                    <button id="install-btn" class="btn-primary">Install</button>
+                    <button id="dismiss-install" class="btn-ghost">Later</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+        // Manual Install Button Logic
+        let manualDeferredPrompt;
+        const headerInstallBtn = document.getElementById('header-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            manualDeferredPrompt = e;
+            headerInstallBtn.style.display = 'inline-flex';
+        });
+
+        headerInstallBtn.addEventListener('click', async () => {
+            if (!manualDeferredPrompt) return;
+            manualDeferredPrompt.prompt();
+            const { outcome } = await manualDeferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            manualDeferredPrompt = null;
+            headerInstallBtn.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            headerInstallBtn.style.display = 'none';
+            manualDeferredPrompt = null;
+        });
+    </script>
+</body>
+
+</html>

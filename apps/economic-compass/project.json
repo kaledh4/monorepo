@@ -1,0 +1,49 @@
+{
+    "name": "economic-compass",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/economic-compass",
+    "projectType": "application",
+    "tags": [
+        "type:app",
+        "scope:dashboard"
+    ],
+    "targets": {
+        "build": {
+            "executor": "@nx/web:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "options": {
+                "outputPath": "dist/apps/economic-compass",
+                "index": "apps/economic-compass/app/templates/index.html",
+                "main": "apps/economic-compass/app/static/app.js",
+                "tsConfig": "apps/economic-compass/tsconfig.app.json",
+                "assets": [
+                    "apps/economic-compass/app/static/manifest.json",
+                    "apps/economic-compass/app/static/sw.js",
+                    "apps/economic-compass/app/static/style.css",
+                    "apps/economic-compass/app/static/interactive.css",
+                    "apps/economic-compass/app/static/icons"
+                ]
+            }
+        },
+        "serve": {
+            "executor": "@nx/web:dev-server",
+            "options": {
+                "buildTarget": "economic-compass:build",
+                "port": 4203
+            }
+        },
+        "deploy": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "gh-pages -d dist/apps/economic-compass -r https://github.com/yourusername/economic-compass.git"
+            }
+        }
+    },
+    "implicitDependencies": [
+        "shared-keys",
+        "shared-pwa",
+        "data-layer"
+    ]
+}
