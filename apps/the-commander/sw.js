@@ -1,4 +1,4 @@
-const CACHE_NAME = 'dashboard-orchestrator-v1';
+const CACHE_NAME = 'the-commander-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

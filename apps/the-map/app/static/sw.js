@@ -1,4 +1,4 @@
-const CACHE_NAME = 'economic-compass-v1';
+const CACHE_NAME = 'the-map-v1';
 const ASSETS_TO_CACHE = [
   '/EconomicCompass/',
   '/EconomicCompass/static/style.css',

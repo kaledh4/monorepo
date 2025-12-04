@@ -1,4 +1,4 @@
-const CACHE_NAME = 'intelligence-platform-v1';
+const CACHE_NAME = 'the-strategy-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',

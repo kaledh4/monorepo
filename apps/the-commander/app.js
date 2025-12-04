@@ -5,8 +5,8 @@ async function fetchDashboardData() {
     const dataPaths = [
         './data/latest.json',
         './latest.json',
-        '../data/dashboard-orchestrator/latest.json',
-        '../../data/dashboard-orchestrator/latest.json'
+        '../data/the-commander/latest.json',
+        '../../data/the-commander/latest.json'
     ];
 
     let lastError = null;

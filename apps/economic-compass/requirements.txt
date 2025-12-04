@@ -1,9 +1,0 @@
-yfinance
-pandas
-requests
-openai
-python-dotenv
-jinja2
-beautifulsoup4
-lxml
-Pillow

@@ -8,8 +8,8 @@ async function loadEconomicData() {
     const dataPaths = [
         './data/latest.json',
         './latest.json',
-        '../data/economic-compass/latest.json',
-        '../../data/economic-compass/latest.json'
+        '../data/the-map/latest.json',
+        '../../data/the-map/latest.json'
     ];
 
     let lastError = null;

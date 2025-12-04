@@ -76,13 +76,13 @@ jobs:
     strategy:
       matrix:
         app:
-          - ai-race
-          - crash-detector
-          - dashboard-orchestrator
-          - economic-compass
-          - intelligence-platform
-          - hyper-analytical
-          - free-knowledge
+          - the-shield
+          - the-frontier
+          - the-map
+          - the-coin
+          - the-strategy
+          - the-library
+          - the-commander
     
     steps:
       - name: Checkout code
@@ -103,40 +103,8 @@ jobs:
       - name: Install dependencies
         run: npm install
       
-      - name: Setup Python (for economic-compass)
-        if: matrix.app == 'economic-compass'
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      
-      - name: Build economic-compass with Python
-        if: matrix.app == 'economic-compass'
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
-          ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
-          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
-          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
-          COINMARKETCAP_KEY: ${{ secrets.COINMARKETCAP_KEY }}
-          COINGECKO_KEY: ${{ secrets.COINGECKO_KEY }}
-        run: |
-          cd apps/economic-compass
-          echo "🔍 Checking environment variables..."
-          if [ -z "$OPENROUTER_API_KEY" ]; then
-            echo "❌ ERROR: OPENROUTER_API_KEY is not set!"
-            exit 1
-          else
-            echo "✅ OPENROUTER_API_KEY is set (length: ${#OPENROUTER_API_KEY})"
-          fi
-          pip install -r requirements.txt
-          python build.py
-          # The build.py creates a 'public/' folder with rendered HTML
-          mkdir -p ../../dist/apps/economic-compass
-          cp -r public/* ../../dist/apps/economic-compass/
-          echo "✅ Economic Compass built with Python"
       
       - name: Build ${{ matrix.app }}
-        if: matrix.app != 'economic-compass'
         run: |
           npm run build:${{ matrix.app }}
       
@@ -150,27 +118,6 @@ jobs:
             if [ -f "data/${{ matrix.app }}/latest.json" ]; then
               cp data/${{ matrix.app }}/latest.json dist/apps/${{ matrix.app }}/ || true
             fi
-          fi
-          
-          # Handle apps that have their data files directly in the app folder
-          # ai-race: mission_data.json
-          if [ "${{ matrix.app }}" = "ai-race" ] && [ -f "apps/ai-race/AI_RACE_CLEAN-main/mission_data.json" ]; then
-            cp apps/ai-race/AI_RACE_CLEAN-main/mission_data.json dist/apps/${{ matrix.app }}/ || true
-          fi
-          
-          # hyper-analytical: dashboard_data.json
-          if [ "${{ matrix.app }}" = "hyper-analytical" ] && [ -f "apps/hyper-analytical/dashboard_data.json" ]; then
-            cp apps/hyper-analytical/dashboard_data.json dist/apps/${{ matrix.app }}/ || true
-          fi
-          
-          # intelligence-platform: market_analysis.json
-          if [ "${{ matrix.app }}" = "intelligence-platform" ] && [ -f "apps/intelligence-platform/market_analysis.json" ]; then
-            cp apps/intelligence-platform/market_analysis.json dist/apps/${{ matrix.app }}/ || true
-          fi
-          
-          # crash-detector: data.json (for backward compat)
-          if [ "${{ matrix.app }}" = "crash-detector" ] && [ -f "apps/crash-detector/data.json" ]; then
-            cp apps/crash-detector/data.json dist/apps/${{ matrix.app }}/ || true
           fi
           
           echo "📂 Contents of dist/apps/${{ matrix.app }}:"
@@ -207,7 +154,7 @@ jobs:
       - name: Prepare Deploy Directory
         run: |
           # Move each app to its correct location (artifacts are nested)
-          for app in ai-race crash-detector dashboard-orchestrator economic-compass intelligence-platform hyper-analytical free-knowledge; do
+          for app in the-shield the-frontier the-map the-coin the-strategy the-library the-commander; do
             if [ -d "dist/apps/$app/$app" ]; then
               # Artifact downloaded with extra nesting, fix it
               mv dist/apps/$app/$app/* dist/apps/$app/ 2>/dev/null || true
@@ -227,11 +174,11 @@ jobs:
           <html>
           <head>
             <meta charset="utf-8">
-            <meta http-equiv="refresh" content="0; url=dashboard-orchestrator/">
+            <meta http-equiv="refresh" content="0; url=the-commander/">
             <title>Monorepo Dashboards</title>
           </head>
           <body>
-            <p>Redirecting to <a href="dashboard-orchestrator/">Dashboard Hub</a>...</p>
+            <p>Redirecting to <a href="the-commander/">Dashboard Hub</a>...</p>
           </body>
           </html>
           EOF

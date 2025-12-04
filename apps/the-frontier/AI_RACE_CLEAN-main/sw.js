@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ai-race-v1';
+const CACHE_NAME = 'the-frontier-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
