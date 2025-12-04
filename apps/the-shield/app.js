@@ -35,6 +35,7 @@ async function fetchData() {
     const dataPaths = [
         './data/latest.json',           // Local data folder
         './latest.json',                 // Same directory
+        './data.json',                   // Existing data file
         '../data/the-shield/latest.json',  // GitHub Pages structure
         '../../data/the-shield/latest.json' // Local dev structure
     ];

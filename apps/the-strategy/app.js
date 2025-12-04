@@ -179,7 +179,8 @@ class AIService {
     static async generateDailyDigest(analysisData = null, arxivPapers = []) {
         let analysisContext = "";
         if (analysisData) {
-            analysisContext = `
+            if (analysisData.meta && analysisData.analysis && typeof analysisData.analysis === 'object') {
+                analysisContext = `
 MARKET ANALYSIS DATA (Moore Analysis / Implied Probability):
 - Ticker: ${analysisData.meta.ticker}
 - Expiration: ${analysisData.meta.expiration}
@@ -189,6 +190,9 @@ MARKET ANALYSIS DATA (Moore Analysis / Implied Probability):
 - 68% Confidence Range: ${analysisData.analysis.expected_range_68pct.low} - ${analysisData.analysis.expected_range_68pct.high}
 - Sentiment: ${analysisData.analysis.sentiment}
 `;
+            } else if (typeof analysisData.analysis === 'string') {
+                analysisContext = `MARKET ANALYSIS STATUS: ${analysisData.analysis}`;
+            }
         }
 
         let researchContext = "";
@@ -675,7 +679,7 @@ class UIController {
         let html = '<div class="research-grid">';
 
         // 1. Moore Analysis Card
-        if (analysisData) {
+        if (analysisData && analysisData.analysis && typeof analysisData.analysis === 'object') {
             html += `
             <div class="analysis-card moore-card">
                 <div class="analysis-header">
