@@ -981,36 +981,93 @@ Provide a brief market intelligence summary."""
 def fetch_for_free_knowledge() -> Dict:
     """
     Fetch all data needed by free-knowledge app.
+    Acts as a meta-analyst over other dashboards.
     Output: data/free-knowledge/latest.json
     """
     logger.info("=" * 50)
     logger.info("FREE-KNOWLEDGE: Starting data fetch")
     logger.info("=" * 50)
     
-    arxiv = ArxivFetcher()
-    news = NewsFetcher()
+    ai = AIFetcher()
     
-    # Fetch arXiv papers across domains
-    queries = {
-        'AI': 'cat:cs.AI',
-        'Physics': 'cat:physics.gen-ph',
-        'Math': 'cat:math.HO',
-        'Biology': 'cat:q-bio.GN'
+    # Helper to load JSON safely
+    def load_json(path: pathlib.Path) -> Dict:
+        try:
+            if path.exists():
+                return json.loads(path.read_text(encoding='utf-8'))
+        except Exception as e:
+            logger.warning(f"Could not load {path}: {e}")
+        return {}
+
+    # Gather inputs from other dashboards
+    # 1. Research Dashboard (AI Race)
+    research_data = load_json(APPS_DIR / 'ai-race' / 'AI_RACE_CLEAN-main' / 'mission_data.json')
+    
+    # 2. Compute Tracker (Intelligence Platform)
+    compute_data = load_json(APPS_DIR / 'intelligence-platform' / 'market_analysis.json')
+    
+    # 3. Capability Dashboard (Hyper Analytical)
+    capability_data = load_json(APPS_DIR / 'hyper-analytical' / 'dashboard_data.json')
+    
+    # 4. Socio Impact Dashboard (Crash Detector)
+    socio_data = load_json(DATA_DIR / 'crash-detector' / 'latest.json')
+    
+    daily_inputs = {
+        "research_dashboard": research_data,
+        "compute_tracker": compute_data,
+        "capability_dashboard": capability_data,
+        "socio_impact_dashboard": socio_data,
     }
     
-    papers = {}
-    for domain, query in queries.items():
-        result = arxiv.fetch_papers(query, max_results=5)
-        if result.success:
-            papers[domain] = result.data['papers']
+    # Generate Daily Conclusion
+    conclusion = {
+        "signal_map": {},
+        "trend_estimate": {"direction": "stable", "percent_change": 0},
+        "meaning": "Analysis unavailable",
+        "confidence": 0
+    }
     
-    # Fetch news
-    news_result = news.fetch_rss()
-    
+    if API_KEYS['OPENROUTER']:
+        try:
+            # Read system prompt
+            prompt_path = APPS_DIR / 'free-knowledge' / 'system_prompt.txt'
+            if prompt_path.exists():
+                system_prompt = prompt_path.read_text(encoding='utf-8')
+            else:
+                # Fallback prompt if file missing
+                system_prompt = """You are a meta-analyst. Fuse inputs into a daily AI advancement conclusion.
+Output JSON: { "signal_map": {}, "trend_estimate": {}, "meaning": "", "confidence": 0-1 }"""
+            
+            user_message = json.dumps(daily_inputs, default=str)
+            
+            # Truncate if too long (simple safety)
+            if len(user_message) > 100000:
+                user_message = user_message[:100000] + "...(truncated)"
+                
+            ai_result = ai.call_ai(
+                user_message,
+                system_prompt=system_prompt,
+                model='grok', # Using Grok for synthesis
+                response_format='json_object'
+            )
+            
+            if ai_result.success:
+                content = ai_result.data['content']
+                # Clean up markdown if present
+                if "```json" in content:
+                    content = content.split("```json")[1].split("```")[0].strip()
+                elif "```" in content:
+                    content = content.split("```")[1].strip()
+                
+                conclusion = json.loads(content)
+                
+        except Exception as e:
+            logger.error(f"[FREE-KNOWLEDGE] Error generating conclusion: {e}")
+            
     return {
         'timestamp': datetime.now().isoformat(),
-        'papers': papers,
-        'news': news_result.data.get('articles', []) if news_result.success else []
+        'daily_conclusion': conclusion,
+        'inputs_snapshot': {k: 'Captured' for k in daily_inputs} # Don't duplicate all data
     }
 
 
