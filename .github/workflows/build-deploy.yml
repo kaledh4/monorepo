@@ -111,6 +111,14 @@ jobs:
       
       - name: Build economic-compass with Python
         if: matrix.app == 'economic-compass'
+        env:
+          OPENROUTER_KEY: ${{ secrets.OPENROUTER_KEY }}
+          NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+          ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
+          FINNHUB_KEY: ${{ secrets.FINNHUB_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          COINMARKETCAP_KEY: ${{ secrets.COINMARKETCAP_KEY }}
+          COINGECKO_KEY: ${{ secrets.COINGECKO_KEY }}
         run: |
           cd apps/economic-compass
           pip install -r requirements.txt
