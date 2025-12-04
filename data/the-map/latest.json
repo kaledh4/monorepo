@@ -1,40 +1,40 @@
 {
   "btc": {
-    "price": 92279.3984375,
+    "price": 92236.5703125,
     "change_7d": 0
   },
   "fng": {
     "value": "26",
     "value_classification": "Fear",
     "timestamp": "1764806400",
-    "time_until_update": "20134"
+    "time_until_update": "18227"
   },
   "macro": {
     "treasury_10y": {
-      "price": 4.099999904632568,
-      "change_7d": 0
-    },
-    "gold": {
-      "price": 4243.5,
+      "price": 4.1020002365112305,
       "change_7d": 0
     },
     "dxy": {
-      "price": 98.96700286865234,
+      "price": 98.93099975585938,
+      "change_7d": 0
+    },
+    "gold": {
+      "price": 4242.10009765625,
       "change_7d": 0
     },
     "oil": {
-      "price": 59.83000183105469,
-      "change_7d": 0
-    },
-    "sp500": {
-      "price": 6856.2998046875,
+      "price": 59.900001525878906,
       "change_7d": 0
     },
     "tasi": {
       "price": 10626.150390625,
       "change_7d": 0
+    },
+    "sp500": {
+      "price": 6854.4501953125,
+      "change_7d": 0
     }
   },
   "ai_analysis": {},
-  "timestamp": "2025-12-04T18:24:28.021153"
+  "timestamp": "2025-12-04T21:56:14.365083"
 }

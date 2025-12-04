@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-12-04T18:24:26.277012",
+  "generated_at": "2025-12-04T21:56:13.047463",
   "domains": {
     "Advanced Manufacturing": {
       "total_volume": 47382,
@@ -212,19 +212,6 @@
       ]
     }
   },
-  "ai_briefing": "# Frontier Briefing\n\n1. **Robotic Tool Use Evolution**\n   Double Interactive RL (Spatial Reasoning) pushes robotics toward autonomous performing intricate tasks via dual-agent learning, reducing human oversight needs in manufacturing/logistics.\n\n2. **Biomolecular Discovery Acceleration**\n   Diffusion models now decode hidden molecular structures in real-time, potentially revolutionizing drug discovery pipelines by simulating protein conformations dynamically.\n\n3. **Semiconductor Material Innovation**\n   CrPS\u2084's reconfigurable magnetic domains and exchange bias properties open pathways for next-gen non-volatile memory and quantum devices, advancing spintronics beyond traditional CMOS.\n\n*These breakthroughs span AI/robotics, computational biology, and materials science, addressing efficiency and scalability gaps across industries.*",
-  "breakthroughs": [
-    {
-      "title": "Double Interactive RL for Tool-Augmented Spatial Reasoning",
-      "why_it_matters": "Enables robots to dynamically plan complex tool interactions using dual reinforcement learning, advancing autonomous systems' ability to perform tasks like assembly or repairs with minimal human intervention."
-    },
-    {
-      "title": "SpikGPT: Spiking Attention Framework for Single-Cell Annotation",
-      "why_it_matters": "Merges spiking (energy-efficient, biologically plausible) networks with attention mechanisms, offering high-accuracy, interpretable analysis of single-cell genomic data, accelerating biomedical research."
-    },
-    {
-      "title": "Configurable Antiferromagnetic Domains in CrPS\u2084",
-      "why_it_matters": "Reveals atomically thin chromium-phosphorus-sulfur compound with tunable magnetic domains and lateral exchange bias, enabling novel spintronic devices for low-power electronics and memory technologies."
-    }
-  ]
+  "ai_briefing": "*AI analysis unavailable. Research data is current.*",
+  "breakthroughs": []
 }
