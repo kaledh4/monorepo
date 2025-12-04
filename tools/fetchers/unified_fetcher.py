@@ -68,7 +68,8 @@ except ImportError:
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    force=True
 )
 logger = logging.getLogger(__name__)
 
@@ -482,6 +483,22 @@ class ArxivFetcher(BaseFetcher):
 
 # ===========================================
 # AI/LLM Fetcher
+# ===========================================
+
+class AIFetcher(BaseFetcher):
+    """Fetches AI analysis using OpenRouter"""
+    
+    MODELS = {
+        'gpt': 'openai/gpt-4o-mini',
+        'grok': 'x-ai/grok-beta',
+        'chimera': 'google/gemini-flash-1.5'
+    }
+    
+    def call_ai(self, prompt: str, system_prompt: str = None, model: str = 'gpt', max_tokens: int = 1000, response_format: str = None) -> FetchResult:
+        """Call AI model"""
+        api_key = API_KEYS.get('OPENROUTER')
+        
+        if not api_key:
             logger.warning("[AI] OpenRouter API key not configured")
             return FetchResult(False, {'content': 'AI analysis temporarily unavailable.'}, 'openrouter', datetime.now(timezone.utc).isoformat(), 'API key not configured')
         
