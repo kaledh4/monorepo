@@ -121,6 +121,13 @@ jobs:
           COINGECKO_KEY: ${{ secrets.COINGECKO_KEY }}
         run: |
           cd apps/economic-compass
+          echo "🔍 Checking environment variables..."
+          if [ -z "$OPENROUTER_KEY" ]; then
+            echo "❌ ERROR: OPENROUTER_KEY is not set!"
+            exit 1
+          else
+            echo "✅ OPENROUTER_KEY is set (length: ${#OPENROUTER_KEY})"
+          fi
           pip install -r requirements.txt
           python build.py
           # The build.py creates a 'public/' folder with rendered HTML

@@ -5,19 +5,19 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure OpenRouter
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_KEY") or os.getenv("OPENROUTER_API_KEY"),
-)
-
-# Use the Alibaba Tongyi DeepResearch model
-MODEL = os.getenv("OPENROUTER_MODEL", "alibaba/tongyi-deepresearch-30b-a3b:free")
-
 def generate_insight(data):
     """
     Generates a market insight based on the provided data using OpenRouter.
     """
+    
+    # Configure OpenRouter (initialized here to ensure env vars are loaded)
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("OPENROUTER_KEY") or os.getenv("OPENROUTER_API_KEY"),
+    )
+    
+    # Use the Alibaba Tongyi DeepResearch model
+    MODEL = os.getenv("OPENROUTER_MODEL", "alibaba/tongyi-deepresearch-30b-a3b:free")
     
     # Construct the prompt
     prompt = f"""
