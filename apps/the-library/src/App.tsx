@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+interface KnowledgeSummary {
+  title: string;
+  eli5: string;
+  long_term: string;
+}
+
 interface KnowledgeData {
   timestamp: string;
-  papers: {
+  summaries?: KnowledgeSummary[];
+  papers?: {
     [domain: string]: Array<{
       title: string;
       summary: string;
@@ -11,7 +18,7 @@ interface KnowledgeData {
       link: string;
     }>;
   };
-  news: Array<{
+  news?: Array<{
     title: string;
     source: string;
     url: string;
@@ -29,8 +36,8 @@ function App() {
     const dataPaths = [
       './data/latest.json',                          // Local data folder
       './latest.json',                                // Same directory
-      '../data/free-knowledge/latest.json',          // GitHub Pages structure
-      '../../data/free-knowledge/latest.json'        // Local dev structure
+      '../data/the-library/latest.json',          // GitHub Pages structure
+      '../../data/the-library/latest.json'        // Local dev structure
     ];
 
     async function fetchData() {
@@ -89,7 +96,7 @@ function App() {
 
       <div className="grid">
         {data.summaries && data.summaries.length > 0 ? (
-          data.summaries.map((item, i) => (
+          data.summaries.map((item: KnowledgeSummary, i: number) => (
             <div className="card" key={i}>
               <h2>📚 {item.title}</h2>
               <div style={{ marginBottom: '1rem' }}>
