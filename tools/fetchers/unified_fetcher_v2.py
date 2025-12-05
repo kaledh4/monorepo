@@ -389,17 +389,35 @@ def fetch_arxiv_papers():
 # ========================================
 
 def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int = 1500) -> Optional[str]:
-    """Call AI model with priority: Grok → Gemini → OpenRouter"""
+    """Call AI model with priority: Grok → Gemini → OpenRouter (with retries)"""
     
     if not REQUESTS_AVAILABLE:
         logger.warning("AI not available (no requests library)")
         return None
     
+    def retry_request(func, *args, **kwargs):
+        """Retry request with exponential backoff"""
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                return func(*args, **kwargs)
+            except requests.exceptions.RequestException as e:
+                # If it's the last attempt, raise
+                if attempt == max_retries - 1:
+                    raise e
+                
+                # Check for 429 (Too Many Requests)
+                if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 429:
+                    wait_time = (attempt + 1) * 5  # 5s, 10s, 15s
+                    logger.warning(f"    ⚠️ Rate limit (429). Retrying in {wait_time}s...")
+                    time.sleep(wait_time)
+                    continue
+                
+                # For other errors, maybe don't retry or retry with shorter delay
+                raise e
+
     # Try Grok API first (X.AI) - FREE
     grok_key = os.environ.get('GROK_API_KEY') or os.environ.get('XAI_API_KEY')
-    if not grok_key:
-        logger.info("  ℹ️ Grok API key not found, skipping...")
-    
     if grok_key:
         try:
             logger.info("  🤖 Calling Grok (X.AI)...")
@@ -414,7 +432,7 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
             messages.append({'role': 'user', 'content': prompt})
             
             payload = {
-                'model': 'grok-beta',  # Free tier model
+                'model': 'grok-beta',
                 'messages': messages,
                 'temperature': 0.7,
                 'max_tokens': max_tokens,
@@ -435,21 +453,17 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                     logger.info("  ✅ Success with Grok!")
                     return content
             else:
-                logger.warning(f"  Grok failed: {response.status_code}")
+                logger.warning(f"  Grok failed: {response.status_code} - {response.text[:100]}")
         
         except Exception as e:
             logger.warning(f"  ❌ Grok error: {e}")
     
     # Try Gemini API second (Google) - FREE
     gemini_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY')
-    if not gemini_key:
-        logger.info("  ℹ️ Gemini API key not found, skipping...")
-
     if gemini_key:
         try:
             logger.info("  🤖 Calling Gemini (Google)...")
             
-            # Gemini format: combine system and user prompts
             full_prompt = f"{system_prompt}\n\n{prompt}"
             
             payload = {
@@ -463,6 +477,7 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                 }
             }
             
+            # Updated model to gemini-1.5-flash-latest for better availability
             url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}'
             
             response = requests.post(url, json=payload, timeout=60)
@@ -473,8 +488,21 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                     content = result['candidates'][0]['content']['parts'][0]['text']
                     logger.info("  ✅ Success with Gemini!")
                     return content
+            elif response.status_code == 404:
+                 # Fallback to gemini-pro if flash fails
+                logger.warning("  Gemini Flash 404, trying Gemini Pro...")
+                url_pro = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={gemini_key}'
+                response = requests.post(url_pro, json=payload, timeout=60)
+                if response.status_code == 200:
+                    result = response.json()
+                    if 'candidates' in result and len(result['candidates']) > 0:
+                        content = result['candidates'][0]['content']['parts'][0]['text']
+                        logger.info("  ✅ Success with Gemini Pro!")
+                        return content
+                else:
+                    logger.warning(f"  Gemini Pro failed: {response.status_code}")
             else:
-                logger.warning(f"  Gemini failed: {response.status_code}")
+                logger.warning(f"  Gemini failed: {response.status_code} - {response.text[:100]}")
         
         except Exception as e:
             logger.warning(f"  ❌ Gemini error: {e}")
@@ -522,13 +550,18 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                     'response_format': {'type': 'json_object'}
                 }
                 
-                response = requests.post(
-                    'https://openrouter.ai/api/v1/chat/completions',
-                    headers=headers,
-                    json=payload,
-                    timeout=60
-                )
-                response.raise_for_status()
+                # Use retry logic for OpenRouter
+                def make_request():
+                    resp = requests.post(
+                        'https://openrouter.ai/api/v1/chat/completions',
+                        headers=headers,
+                        json=payload,
+                        timeout=60
+                    )
+                    resp.raise_for_status()
+                    return resp
+
+                response = retry_request(make_request)
                 
                 result = response.json()
                 if 'choices' in result and len(result['choices']) > 0:
@@ -537,7 +570,7 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                     return content
             
             except Exception as e:
-                logger.warning(f"  ❌ Failed {model_key}: {e}")
+                logger.warning(f"  ❌ Failed {model_key}: {str(e)[:100]}")
                 continue
     
     logger.error("  ❌ All AI providers failed")
