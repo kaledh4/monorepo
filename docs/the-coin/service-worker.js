@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'the-coin-1764921341865';
+const CACHE_NAME = 'the-coin-1764921900107';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
