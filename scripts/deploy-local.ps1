@@ -11,36 +11,7 @@ Copy-Item -Path "dist/apps/*" -Destination docs -Recurse -Force
 Write-Host "Copying data..."
 if (Test-Path data) { Copy-Item -Path "data" -Destination docs -Recurse -Force }
 
-Write-Host "Creating index.html..."
-$indexHtml = @"
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Alpha Loop - Dashboard Index</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .dashboard-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
-        .dashboard-link { display: block; padding: 20px; background: #f5f5f5; border-radius: 8px; text-decoration: none; color: #333; }
-        .dashboard-link:hover { background: #e0e0e0; }
-    </style>
-</head>
-<body>
-    <h1>Daily Alpha Loop Dashboard System</h1>
-    <p>Access your dashboards below:</p>
-    <div class="dashboard-links">
-        <a href="/daily-alpha-loop/the-shield/" class="dashboard-link">🛡️ The Shield - Market Fragility Monitor</a>
-        <a href="/daily-alpha-loop/the-coin/" class="dashboard-link">🪙 The Coin - Crypto Momentum Scanner</a>
-        <a href="/daily-alpha-loop/the-map/" class="dashboard-link">🗺️ The Map - Macro & TASI Trendsetter</a>
-        <a href="/daily-alpha-loop/the-frontier/" class="dashboard-link">🚀 The Frontier - Silicon Frontier Watch</a>
-        <a href="/daily-alpha-loop/the-strategy/" class="dashboard-link">🎯 The Strategy - Unified Opportunity Radar</a>
-        <a href="/daily-alpha-loop/the-library/" class="dashboard-link">📚 The Library - Alpha-Clarity Archive</a>
-        <a href="/daily-alpha-loop/the-commander/" class="dashboard-link">🎖️ The Commander - Master Orchestrator</a>
-    </div>
-</body>
-</html>
-"@
-Set-Content -Path docs/index.html -Value $indexHtml
+Write-Host "Setting up The Commander as landing page..."
+Copy-Item -Path "dist/apps/the-commander/index.html" -Destination "docs/index.html" -Force
 
 Write-Host "Done. Ready to push."

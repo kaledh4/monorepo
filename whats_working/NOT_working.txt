@@ -1,6 +1,264 @@
-all 5 
+The Library - Alpha-Clarity Archive
 
-also need fixing and removing the other branch and leaving master as the only working branch 
-and yesterday I hit usage so many times 
-building should not include api calls 
-only DAILY BREIF.yml should include the daily api data filling approach 
+Updated: 12/4/2025, 8:11:58 PM
+
+No summaries available yet.
+
+
+
+Initializing Market Data...
+The Shield
+Market Fragility Monitor
+Last Updated: 2025-12-04 18:47:47 UTC • Days Remaining: 358
+Composite Risk Level
+LOW
+Risk Score: 10.7/100
+Key Stress Indicators
+10Y Treasury Auction Bid-to-Cover
+2.43x
+NORMAL
+Demand strength
+USD/JPY
+154.94
+HIGH STRESS
+USD/JPY current level
+10Y Treasury Yield
+4.10%
+NORMAL
+10Y Treasury Yield current level
+USD/CNH
+7.0686
+NORMAL
+USD/CNH current level
+MOVE Index
+66.46
+NORMAL
+MOVE Index current level
+VIX
+15.91
+NORMAL
+VIX current level
+CBON ETF
+$22.56
+NORMAL
+CBON ETF current level
+AI Crash Prediction Analysis
+Real News + AI
+Market Crash Probability
+AI analysis unavailable
+Latest Financial News Summary
+Check latest news sources
+
+For informational purposes only. See README for full legal disclaimer.
+Uncaught SyntaxError: redeclaration of let deferredPrompt
+    <anonymous> https://kaledh4.github.io/daily-alpha-loop/the-shield/:139
+the-shield:139:13
+    <anonymous> https://kaledh4.github.io/daily-alpha-loop/the-shield/:139
+Data loaded from: ./data/latest.json app.js:50:25
+
+
+
+The Map
+{{ generated_at }}
+Fear & Greed
+{% set fng = insight.raw_data.fng %} {% set fng_color = '#10b981' if fng.value|int > 60 else '#ef4444' if fng.value|int < 40 else '#f59e0b' %}
+{{ fng.value }}
+{{ fng.value_classification }}
+BTC Trend
+{% set btc = insight.raw_data.btc %} {% if btc %}
+Price ${{ "{:,.0f}".format(btc.price) }}
+RSI (14) {{ "{:.1f}".format(btc.rsi) }}
+Trend {{ btc.trend_weekly }}
+{% else %}
+Data Unavailable
+{% endif %}
+Macro Pulse
+{% set macro = insight.raw_data.macro %}
+10Y Yield {% set y_chg = macro.treasury_10y.change_7d %} {% set y_sym = '▲' if y_chg >= 0 else '▼' %} {% set y_col = 'text-green' if y_chg >= 0 else 'text-red' %} {{ "{:.2f}".format(macro.treasury_10y.price) }}% {{ y_sym }} {{ "{:.1f}".format(y_chg|abs) }}%
+Gold {% set g_chg = macro.gold.change_7d %} {% set g_sym = '▲' if g_chg >= 0 else '▼' %} {% set g_col = 'text-green' if g_chg >= 0 else 'text-red' %} ${{ "{:,.0f}".format(macro.gold.price) }} {{ g_sym }} {{ "{:.1f}".format(g_chg|abs) }}%
+S&P 500 {% set s_chg = macro.sp500.change_7d %} {% set s_sym = '▲' if s_chg >= 0 else '▼' %} {% set s_col = 'text-green' if s_chg >= 0 else 'text-red' %} {{ "{:,.0f}".format(macro.sp500.price) }} {{ s_sym }} {{ "{:.1f}".format(s_chg|abs) }}%
+TASI {% set t_chg = macro.tasi.change_7d %} {% set t_sym = '▲' if t_chg >= 0 else '▼' %} {% set t_col = 'text-green' if t_chg >= 0 else 'text-red' %} {{ "{:,.0f}".format(macro.tasi.price) }} {{ t_sym }} {{ "{:.1f}".format(t_chg|abs) }}%
+Daily Market Intelligence
+Updated:
+📊 Community Sentiment
+
+The system says market is cautious. What do you think?
+💼 Investor Mode: Focus on macro trends, 200-day MA, and fundamental developments.
+{{ insight.html | safe }}
+
+
+
+THE FRONTIER
+SILICON FRONTIER WATCH // DAY 11
+Critical Timeline
+Resource ID
+79 days
+Data Assets
+109 days
+Robotics Integration
+229 days
+Operating Capability
+259 days
+STRATEGIC BRIEFING
+AI analysis unavailable. Research data is current.
+Advanced Manufacturing
+47,382 papers
+2025-12-03
+SpaceTools: Tool-Augmented Spatial Reasoning via Double Interactive RL
+Vision Language Models (VLMs) demonstrate strong qualitative visual understanding, but struggle with metrically precise spatial reasoning required for embodied applications. The agentic paradigm promi...
+2025-12-03
+Artificial Microsaccade Compensation: Stable Vision for an Ornithopter
+Animals with foveated vision, including humans, experience microsaccades, small, rapid eye movements that they are not aware of. Inspired by this phenomenon, we develop a method for "Artificial Micros...
+2025-12-03
+When to Say "Hi" - Learn to Open a Conversation with an in-the-wild Dataset
+The social capabilities of socially interactive agents (SIA) are a key to successful and smooth interactions between the user and the SIA. A successful start of the interaction is one of the essential...
+2025-12-03
+MDE-AgriVLN: Agricultural Vision-and-Language Navigation with Monocular Depth Estimation
+Agricultural robots are serving as powerful assistants across a wide range of agricultural tasks, nevertheless, still heavily relying on manual operations or railway systems for movement. The AgriVLN ...
+2025-12-03
+Classification of User Satisfaction in HRI with Social Signals in the Wild
+Socially interactive agents (SIAs) are being used in various scenarios and are nearing productive deployment. Evaluating user satisfaction with SIAs' performance is a key factor in designing the inter...
+Biotechnology
+9,994 papers
+2025-12-02
+Unlocking hidden biomolecular conformational landscapes in diffusion models at inference time
+The function of biomolecules such as proteins depends on their ability to interconvert between a wide range of structures or "conformations." Researchers have endeavored for decades to develop computa...
+2025-12-02
+SpikGPT: A High-Accuracy and Interpretable Spiking Attention Framework for Single-Cell Annotation
+Accurate and scalable cell type annotation remains a challenge in single-cell transcriptomics, especially when datasets exhibit strong batch effects or contain previously unseen cell populations. Here...
+2025-12-02
+Contrastive Deep Learning for Variant Detection in Wastewater Genomic Sequencing
+Wastewater-based genomic surveillance has emerged as a powerful tool for population-level viral monitoring, offering comprehensive insights into circulating viral variants across entire communities. H...
+2025-12-02
+Modulation of DNA rheology by a transcription factor that forms aging microgels
+Proteins and nucleic acids form non-Newtonian liquids with complex rheological properties that contribute to their function in vivo. Here we investigate the rheology of the transcription factor NANOG,...
+2025-12-02
+PanFoMa: A Lightweight Foundation Model and Benchmark for Pan-Cancer
+Single-cell RNA sequencing (scRNA-seq) is essential for decoding tumor heterogeneity. However, pan-cancer research still faces two key challenges: learning discriminative and efficient single-cell rep...
+Critical Materials
+18,465 papers
+2025-12-03
+Capture into Apsidal Resonance and the Decimation of Planets around In-spiraling Binaries
+Transiting circumbinary planets (CBPs) are conspicuously rare, and entirely absent around stellar binaries with periods $\leq 7$ days. Here, we exploit a secular resonance to stimulate the orbit of a ...
+2025-12-03
+Visualization of vortex sheets and half quantum vortices in the chiral odd-parity superconductor UPt$_{3}$
+Superconductivity is characterized by vanishing electrical resistance and magnetic flux expulsion. For conventional type II superconductors, the magnetic flux expulsion is incomplete in an applied mag...
+2025-12-03
+Resolving Structural Transitions in Lanthanide High-Entropy Oxides
+We report a temperature-composition phase diagram for the chemically disordered and CeO2-LA2O3 high entropy oxides (HEOs), where LA denotes equimolar Y, La, Sm, and Pr, delineating stability regions f...
+2025-12-03
+DHICA ion-modified melanin based porous Si solar cell
+This work studies photosensitivity and current-voltage characteristics under illumination of water-soluble eumelanin films based on DHICA tetramers and hybrid eumelanin/porous Si photovoltaic cells ai...
+2025-12-03
+Layered XZnBi (X = Rb, Cs) with Pudding-Mold Bands, Complex Fermi Surfaces and Low Thermal Conductivity: A First-Principles Study of Thermoelectric Properties
+Layered Zintl compounds exhibit significant tunability of thermoelectric (TE) parameters facilitated by their multiple elemental combinations and flexibility in stacking order within the layers. In th...
+Nuclear Energy
+76,396 papers
+2025-12-03
+Kinetic Mixing and Axial Charges in the Parity-Doublet Model
+The standard parity doublet model with its mass-mixing mechanism fails to describe the axial charge $g_A$ of the nucleon. While $g_A = 1$ in the original Gell-Mann--Levy model, which reproduces the Ad...
+2025-12-03
+Generalized Beth--Uhlenbeck entropy formula from the $Φ-$derivable approach
+We derive a generalized Beth-Uhlenbeck formula for the entropy of a dense fermion system with strong two-particle correlations, including scattering states and bound states. We work within the $Φ-$der...
+2025-12-03
+Impact of octupole deformation on the nuclear electromagnetic response
+Background: Properties of giant dipole resonances (GDRs), along with other nuclear resonances, provide valuable tools for refining theoretical models as they reflect collective features of nuclear mat...
+2025-12-03
+Compton suppressed scintillation spectrometer based on a cluster of 9$\times$CeBr$_{3}$-NaI(Tl) phoswich detectors
+Measurements of the characteristics of an Compton suppressed spectrometer consisting of 9$\times$CeBr$_{3}$-NaI(Tl) phoswich detectors surrounded by four CsI(Tl) scintillation detectors intended for s...
+2025-12-03
+Initial state and evolution of hot and dense medium produced in isobaric collisions at 200A GeV at RHIC
+Isobaric collisions provide a unique opportunity to investigate how variations in the charge to mass ratio affect the final state observables produced in relativistic heavy ion collisions. Most import...
+Quantum Info Science
+171,016 papers
+2025-12-03
+Instantaneous Sobolev Regularization for Dissipative Bosonic Dynamics
+We investigate quantum Markov semigroups on bosonic Fock space and identify a broad class of infinite-dimensional dissipative evolutions that exhibit instantaneous Sobolev-regularization. Motivated by...
+2025-12-03
+Closing the problem of which causal structures of up to six total nodes have a classical-quantum gap
+The discovery of Bell that there exist quantum correlations that cannot be reproduced classically is one of the most important in the foundations of quantum mechanics, as well as having practical impl...
+2025-12-03
+Thermalization from quenching in coupled oscillators
+We introduce a finite-time protocol that thermalizes a quantum harmonic oscillator, initially in its ground state, without requiring a macroscopic bath. The method uses a second oscillator as an effec...
+2025-12-03
+TARA Test-by-Adaptive-Ranks for Quantum Anomaly Detection with Conformal Prediction Guarantees
+Quantum key distribution (QKD) security fundamentally relies on the ability to distinguish genuine quantum correlations from classical eavesdropper simulations, yet existing certification methods lack...
+2025-12-03
+Fully quantum theory of strong-field driven tunable entangled multi-photon states in HHG
+Quantum high-harmonic generation (HHG) is a growing field of research with capabilities of providing high photon-number entangled states of light. However, there is an open debate regarding the theory...
+Semiconductors
+104,935 papers
+2025-12-03
+Transport evidence of surface states in magnetic topological insulator MnBi2Te4
+Magnetic topological insulators can host chiral 1D edge channels at zero magnetic field, when a magnetic gap opens at the Dirac point in the band structure of 2D topological surface states, lead- ing ...
+2025-12-03
+Configurable antiferromagnetic domains and lateral exchange bias in atomically thin CrPS4
+Interfacial exchange coupling between antiferromagnets (AFMs) and ferromagnets (FMs) crucially makes it possible to shift the FM hysteresis, known as exchange bias, and to switch AFM states. Two-dimen...
+2025-12-03
+High-order two-component fractional quantum Hall states around filling factor $ν= 1$
+Two-component fractional quantum Hall (2C-FQH) states in electron bilayers have been known for decades, yet their experimental realization remained limited to low-order fractions. Here we report on se...
+2025-12-03
+Non-radiative energy transfer between boron vacancies in hexagonal boron nitride and other 2D materials
+Boron vacancies ($V_B^-$) in hexagonal boron nitride (hBN) have emerged as a promising platform for two-dimensional quantum sensors capable of operating at atomic-scale proximity. However, the mechani...
+2025-12-03
+Benchmark for Planning and Control with Large Language Model Agents: Blocksworld with Model Context Protocol
+Industrial automation increasingly requires flexible control strategies that can adapt to changing tasks and environments. Agents based on Large Language Models (LLMs) offer potential for such adaptiv...
+
+
+
+THE COMMANDER
+
+Master Orchestrator - Summary of Summaries
+Thursday, December 4, 2025 at 06:56 PM UTC
+Shield
+The Shield
+
+Market Fragility Monitor
+Launch Dashboard →
+Coin
+The Coin
+
+Crypto Momentum Scanner
+Launch Dashboard →
+Map
+The Map
+
+Macro & TASI Trendsetter
+Launch Dashboard →
+AI Frontier
+The Frontier
+
+Silicon Frontier Watch
+Launch Dashboard →
+Strategy
+The Strategy
+
+Unified Opportunity Radar
+Launch Dashboard →
+Library
+The Library
+
+Alpha-Clarity Archive
+Launch Dashboard →
+📊 Market Overview
+🌤️ Weather of the Day
+N/A
+📡 Top Signal
+N/A
+💡 Why It Matters
+N/A
+🔄 Convergence
+N/A
+🎯 Action Stance
+N/A
+🔮 Clarity Level
+N/A
+""
+Dashboard Status
+the-frontier active
+the-shield active
+the-map active
+the-coin active
+the-strategy active
+the-library active
+

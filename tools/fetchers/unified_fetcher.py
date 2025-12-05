@@ -1131,8 +1131,10 @@ def fetch_for_dashboard_orchestrator() -> Dict:
     
     morning_brief = {}
     
+    # Try AI generation first
     if API_KEYS['OPENROUTER']:
-        prompt = f"""Create a 30-Second Coffee Read.
+        try:
+            prompt = f"""Create a 30-Second Coffee Read.
 Inputs:
 Risk: {json.dumps(risk_data.get('risk_assessment', {}))}
 Crypto: {crypto_data.get('momentum', 'N/A')}
@@ -1160,20 +1162,48 @@ Return JSON:
   "clarity_level": "Level",
   "summary_sentence": "Risk shows the environment, crypto shows sentiment, macro shows the wind, breakthroughs show the future, strategy shows the stance, and knowledge shows the long-term signal — combine all six to guide the user clearly through today."
 }}"""
-        
-        ai_result = ai.call_ai(prompt, 
-                                models=['llama-70b', 'olmo-32b-alt'],
-                                response_format='json_object')
-        
-        if ai_result.success:
-            try:
+            
+            ai_result = ai.call_ai(prompt, 
+                                    models=['llama-70b', 'olmo-32b-alt'],
+                                    response_format='json_object')
+            
+            if ai_result.success:
                 content = ai_result.data['content']
                 start = content.find('{')
                 end = content.rfind('}') + 1
                 if start != -1 and end > start:
                     morning_brief = json.loads(content[start:end])
-            except:
-                pass
+        except Exception as e:
+            logger.warning(f"AI Morning Brief generation failed: {e}")
+
+    # Fallback if AI failed or keys missing
+    if not morning_brief:
+        logger.info("Generating fallback Morning Brief...")
+        
+        # Derive simple insights from data
+        risk_level = risk_data.get('risk_assessment', {}).get('level', 'UNKNOWN')
+        crypto_momentum = crypto_data.get('momentum', 'Neutral')
+        strategy_stance = strategy_data.get('stance', 'Neutral')
+        
+        weather = "Cloudy"
+        if risk_level == 'CRITICAL': weather = "Stormy"
+        elif risk_level == 'LOW' and crypto_momentum == 'Bullish': weather = "Sunny"
+        elif risk_level == 'ELEVATED': weather = "Foggy"
+        
+        top_signal = "Market Data Available"
+        if risk_level != 'LOW': top_signal = f"Risk Level: {risk_level}"
+        elif crypto_momentum != 'Neutral': top_signal = f"Crypto: {crypto_momentum}"
+        
+        morning_brief = {
+            "weather_of_the_day": weather,
+            "top_signal": top_signal,
+            "why_it_matters": "AI analysis is currently unavailable, but core market data has been updated. Check individual dashboards for specific metrics.",
+            "cross_dashboard_convergence": f"Risk is {risk_level}, Crypto is {crypto_momentum}, and Strategy suggests {strategy_stance}.",
+            "action_stance": strategy_stance,
+            "optional_deep_insight": "System is operating in data-only mode. All feeds are active.",
+            "clarity_level": "Medium",
+            "summary_sentence": "Data feeds active. AI synthesis pending next scheduled run."
+        }
     
     return {
         'timestamp': datetime.now().isoformat(),

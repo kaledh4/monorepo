@@ -1,6 +1,15 @@
 {
-  "timestamp": "2025-12-04T20:11:59.291786",
-  "morning_brief": {},
+  "timestamp": "2025-12-05T08:58:00.000000",
+  "morning_brief": {
+    "weather_of_the_day": "Cloudy",
+    "top_signal": "Market Data Available",
+    "why_it_matters": "AI analysis is currently unavailable, but core market data has been updated. Check individual dashboards for specific metrics.",
+    "cross_dashboard_convergence": "Risk is LOW, Crypto is Neutral, and Strategy suggests Wait for clarity.",
+    "action_stance": "Neutral",
+    "optional_deep_insight": "System is operating in data-only mode. All feeds are active.",
+    "clarity_level": "Medium",
+    "summary_sentence": "Data feeds active. AI synthesis pending next scheduled run."
+  },
   "apps_status": {
     "the-frontier": "active",
     "the-shield": "active",
