@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '0 4 * * *' # 4 AM UTC = 7 AM UTC+3 (User's time is +3)
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 permissions:
   contents: write
