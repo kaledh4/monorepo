@@ -44,14 +44,7 @@ jobs:
         run: python tools/fetchers/unified_fetcher_v2.py
 
       - name: Build all applications
-        run: |
-          npm run build:the-shield
-          npm run build:the-coin
-          npm run build:the-map
-          npm run build:the-frontier
-          npm run build:the-strategy
-          npm run build:the-library
-          npm run build:the-commander
+        run: npm run build
 
       - name: Prepare GitHub Pages
         run: |
@@ -67,6 +60,9 @@ jobs:
           cp -r dist/apps/the-strategy docs/the-strategy
           cp -r dist/apps/the-library docs/the-library
           cp -r dist/apps/the-commander docs/the-commander
+          
+          # Copy shared assets (CRITICAL for dashboard-core.js)
+          cp -r dist/shared docs/shared
 
           # Copy data directory to docs so apps can access it
           cp -r data docs/data

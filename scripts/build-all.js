@@ -46,3 +46,41 @@ if (failed.length > 0) {
 }
 
 console.log('\n✓ All builds completed successfully!');
+
+// Copy data directory to dist/data
+const fs = require('fs');
+const path = require('path');
+
+const dataSrc = path.join(__dirname, '..', 'data');
+const dataDest = path.join(__dirname, '..', 'dist', 'data');
+
+if (fs.existsSync(dataSrc)) {
+    console.log('\n=== Copying Data Directory ===');
+    try {
+        if (!fs.existsSync(dataDest)) {
+            fs.mkdirSync(dataDest, { recursive: true });
+        }
+        
+        // Recursive copy function for CommonJS
+        function copyRecursiveSync(src, dest) {
+            const stats = fs.statSync(src);
+            if (stats.isDirectory()) {
+                if (!fs.existsSync(dest)) {
+                    fs.mkdirSync(dest);
+                }
+                fs.readdirSync(src).forEach(childItemName => {
+                    copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
+                });
+            } else {
+                fs.copyFileSync(src, dest);
+            }
+        }
+
+        copyRecursiveSync(dataSrc, dataDest);
+        console.log(`✓ Copied data to ${dataDest}`);
+    } catch (err) {
+        console.error(`✗ Failed to copy data: ${err.message}`);
+    }
+} else {
+    console.warn('⚠️ Data directory not found. Skipping copy.');
+}

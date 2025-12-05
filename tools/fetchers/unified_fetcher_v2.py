@@ -389,191 +389,58 @@ def fetch_arxiv_papers():
 # ========================================
 
 def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int = 1500) -> Optional[str]:
-    """Call AI model with priority: Grok → Gemini → OpenRouter (with retries)"""
+    """Call AI model using ONLY Gemini (Google) as requested."""
     
     if not REQUESTS_AVAILABLE:
         logger.warning("AI not available (no requests library)")
         return None
     
-    def retry_request(func, *args, **kwargs):
-        """Retry request with exponential backoff"""
-        max_retries = 3
-        for attempt in range(max_retries):
-            try:
-                return func(*args, **kwargs)
-            except requests.exceptions.RequestException as e:
-                # If it's the last attempt, raise
-                if attempt == max_retries - 1:
-                    raise e
-                
-                # Check for 429 (Too Many Requests)
-                if isinstance(e, requests.exceptions.HTTPError) and e.response.status_code == 429:
-                    wait_time = (attempt + 1) * 5  # 5s, 10s, 15s
-                    logger.warning(f"    ⚠️ Rate limit (429). Retrying in {wait_time}s...")
-                    time.sleep(wait_time)
-                    continue
-                
-                # For other errors, maybe don't retry or retry with shorter delay
-                raise e
-
-    # Try Grok API first (X.AI) - FREE
-    grok_key = os.environ.get('GROK_API_KEY') or os.environ.get('XAI_API_KEY')
-    if grok_key:
-        try:
-            logger.info("  🤖 Calling Grok (X.AI)...")
-            headers = {
-                'Authorization': f'Bearer {grok_key}',
-                'Content-Type': 'application/json'
-            }
-            
-            messages = []
-            if system_prompt:
-                messages.append({'role': 'system', 'content': system_prompt})
-            messages.append({'role': 'user', 'content': prompt})
-            
-            payload = {
-                'model': 'grok-beta',
-                'messages': messages,
-                'temperature': 0.7,
-                'max_tokens': max_tokens,
-                'stream': False
-            }
-            
-            response = requests.post(
-                'https://api.x.ai/v1/chat/completions',
-                headers=headers,
-                json=payload,
-                timeout=60
-            )
-            
-            if response.status_code == 200:
-                result = response.json()
-                if 'choices' in result and len(result['choices']) > 0:
-                    content = result['choices'][0]['message']['content']
-                    logger.info("  ✅ Success with Grok!")
-                    return content
-            else:
-                logger.warning(f"  Grok failed: {response.status_code} - {response.text[:100]}")
-        
-        except Exception as e:
-            logger.warning(f"  ❌ Grok error: {e}")
-    
-    # Try Gemini API second (Google) - FREE
+    # Gemini API (Google) - SINGLE SOURCE
     gemini_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY')
-    if gemini_key:
-        try:
-            logger.info("  🤖 Calling Gemini (Google)...")
-            
-            full_prompt = f"{system_prompt}\n\n{prompt}"
-            
-            payload = {
-                'contents': [{
-                    'parts': [{'text': full_prompt}]
-                }],
-                'generationConfig': {
-                    'temperature': 0.7,
-                    'maxOutputTokens': max_tokens,
-                    'responseMimeType': 'application/json'
-                }
+    if not gemini_key:
+        logger.error("❌ GEMINI_API_KEY not found. AI generation disabled.")
+        return None
+
+    try:
+        logger.info("  🤖 Calling Gemini 2.5 Pro...")
+        
+        full_prompt = f"{system_prompt}\n\n{prompt}"
+        
+        payload = {
+            'contents': [{
+                'parts': [{'text': full_prompt}]
+            }],
+            'generationConfig': {
+                'temperature': 0.7,
+                'maxOutputTokens': max_tokens,
+                'responseMimeType': 'application/json'
             }
-            
-            # Updated model to gemini-1.5-flash-latest for better availability
-            url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}'
-            
-            response = requests.post(url, json=payload, timeout=60)
-            
-            if response.status_code == 200:
-                result = response.json()
-                if 'candidates' in result and len(result['candidates']) > 0:
-                    content = result['candidates'][0]['content']['parts'][0]['text']
-                    logger.info("  ✅ Success with Gemini!")
-                    return content
-            elif response.status_code == 404:
-                 # Fallback to gemini-pro if flash fails
-                logger.warning("  Gemini Flash 404, trying Gemini Pro...")
-                url_pro = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={gemini_key}'
-                response = requests.post(url_pro, json=payload, timeout=60)
+        }
+        
+        # Primary Model: gemini-2.5-pro (as requested)
+        # Fallback: gemini-1.5-pro
+        models_to_try = ['gemini-2.5-pro', 'gemini-1.5-pro', 'gemini-1.5-flash']
+        
+        for model in models_to_try:
+            try:
+                url = f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}'
+                response = requests.post(url, json=payload, timeout=60)
+                
                 if response.status_code == 200:
                     result = response.json()
                     if 'candidates' in result and len(result['candidates']) > 0:
                         content = result['candidates'][0]['content']['parts'][0]['text']
-                        logger.info("  ✅ Success with Gemini Pro!")
+                        logger.info(f"  ✅ Success with {model}!")
                         return content
                 else:
-                    logger.warning(f"  Gemini Pro failed: {response.status_code}")
-            else:
-                logger.warning(f"  Gemini failed: {response.status_code} - {response.text[:100]}")
-        
-        except Exception as e:
-            logger.warning(f"  ❌ Gemini error: {e}")
-    
-    # Fallback to OpenRouter (has free models)
-    openrouter_key = os.environ.get('OPENROUTER_KEY') or os.environ.get('OPENROUTER_API_KEY')
-    if openrouter_key:
-        model_map = {
-            'llama-70b': 'meta-llama/llama-3.3-70b-instruct:free',
-            'olmo-32b': 'allenai/olmo-3-32b-think:free',
-            'mistral-24b': 'mistralai/mistral-small-3.1-24b-instruct:free',
-            'dolphin-24b': 'cognitivecomputations/dolphin-mistral-24b-venice-edition:free',
-            'qwen-235b': 'qwen/qwen3-235b-a22b:free',
-            'glm-4': 'z-ai/glm-4.5-air:free',
-            'tongyi-30b': 'alibaba/tongyi-deepresearch-30b-a3b:free',
-            'nemotron-12b': 'nvidia/nemotron-nano-12b-v2-vl:free',
-            'chimera': 'tngtech/tng-r1t-chimera:free',
-            'kimi': 'moonshotai/kimi-k2:free',
-            'longcat': 'meituan/longcat-flash-chat:free',
-            'gemma-2b': 'google/gemma-3n-e2b-it:free',
-        }
-        
-        for model_key in models:
-            model_id = model_map.get(model_key, model_key)
-            try:
-                logger.info(f"  🤖 Calling OpenRouter ({model_key})...")
-                
-                headers = {
-                    'Authorization': f'Bearer {openrouter_key}',
-                    'Content-Type': 'application/json',
-                    'HTTP-Referer': 'https://kaledh4.github.io/daily-alpha-loop/',
-                    'X-Title': 'Daily Alpha Loop'
-                }
-                
-                messages = []
-                if system_prompt:
-                    messages.append({'role': 'system', 'content': system_prompt})
-                messages.append({'role': 'user', 'content': prompt})
-                
-                payload = {
-                    'model': model_id,
-                    'messages': messages,
-                    'temperature': 0.7,
-                    'max_tokens': max_tokens,
-                    'response_format': {'type': 'json_object'}
-                }
-                
-                # Use retry logic for OpenRouter
-                def make_request():
-                    resp = requests.post(
-                        'https://openrouter.ai/api/v1/chat/completions',
-                        headers=headers,
-                        json=payload,
-                        timeout=60
-                    )
-                    resp.raise_for_status()
-                    return resp
-
-                response = retry_request(make_request)
-                
-                result = response.json()
-                if 'choices' in result and len(result['choices']) > 0:
-                    content = result['choices'][0]['message']['content']
-                    logger.info(f"  ✅ Success with {model_key}!")
-                    return content
-            
+                    logger.warning(f"  {model} failed: {response.status_code} - {response.text[:100]}")
             except Exception as e:
-                logger.warning(f"  ❌ Failed {model_key}: {str(e)[:100]}")
-                continue
+                logger.warning(f"  Error with {model}: {e}")
+                
+    except Exception as e:
+        logger.warning(f"  ❌ Gemini error: {e}")
     
-    logger.error("  ❌ All AI providers failed")
+    logger.error("  ❌ All Gemini models failed")
     return None
 
 # ========================================
