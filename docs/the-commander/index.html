@@ -7,13 +7,20 @@
     <title>The Commander - Daily Alpha Loop</title>
     <link rel="stylesheet" href="../shared/styles.css">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
 </head>
 
 <body>
     <div class="container">
+        <button id="install-app-btn">📲 Install App</button>
         <div class="header">
             <h1>The Commander</h1>
-            <p>Loading...</p>
+            <div id="loading-skeleton" style="width: 100%; max-width: 800px; margin: 0 auto;">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-card" style="height: 200px; margin-top: 30px;"></div>
+            </div>
         </div>
         <div id="nav"></div>
         <div id="content"></div>

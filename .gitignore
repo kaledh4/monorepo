@@ -42,3 +42,9 @@ Thumbs.db
 .nx/workspace-data
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+# Android Signing Keys & Sensitive Data
+*.keystore
+*.jks
+signing-key-info.txt
+shared/Commander - Google Play package/
