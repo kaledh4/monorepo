@@ -17,5 +17,10 @@
       "type": "image/png",
       "sizes": "512x512"
     }
+  ],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
   ]
 }

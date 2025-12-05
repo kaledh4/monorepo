@@ -32,6 +32,13 @@ function renderHeader(data) {
 function renderScoring(scoring) {
     if (!scoring) return '';
 
+    const getScale = (key, value) => {
+        const k = key.toLowerCase();
+        if (k.includes('rate') || k.includes('percent') || k === 'risk_level') return '/ 100';
+        if (k === 'confidence' || k === 'uncertainty') return ''; // Usually 0-1
+        return '/ 10';
+    };
+
     return `
         <div class="content-card">
             <h2><img src="../static/icons/icons8-strategy-48.png" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"> Core Metrics</h2>
@@ -39,7 +46,9 @@ function renderScoring(scoring) {
                 ${Object.entries(scoring).map(([key, value]) => `
                     <div class="data-section">
                         <h3>${key.replace(/_/g, ' ').toUpperCase()}</h3>
-                        <div class="data-value" style="color: #63b3ed;">${value}</div>
+                        <div class="data-value" style="color: #63b3ed;">
+                            ${value} <span style="font-size: 0.8rem; color: #718096;">${getScale(key, value)}</span>
+                        </div>
                     </div>
                 `).join('')}
             </div>
@@ -76,10 +85,22 @@ function renderAIAnalysis(analysis) {
 function renderMorningBrief(brief) {
     if (!brief) return '';
 
+    const getWeatherIcon = (weather) => {
+        const w = weather.toLowerCase();
+        if (w.includes('storm')) return '⛈️';
+        if (w.includes('cloud')) return '☁️';
+        if (w.includes('sun') || w.includes('clear')) return '☀️';
+        if (w.includes('fog')) return '🌫️';
+        if (w.includes('volat')) return '⚡';
+        if (w.includes('rain')) return '🌧️';
+        return '🌡️';
+    };
+
     return `
         <div class="content-card">
-            <div class="weather-badge" style="text-align: center;">
-                Weather: ${brief.weather_of_the_day}
+            <div class="weather-badge" style="text-align: center; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span>Weather: ${brief.weather_of_the_day}</span>
+                <span style="font-size: 2rem;">${getWeatherIcon(brief.weather_of_the_day)}</span>
             </div>
             
             <div class="data-grid" style="margin-top: 20px;">
@@ -188,7 +209,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Update UI to notify the user they can add to home screen
     if (installBtn) {
         installBtn.style.display = 'block';
-        
+
         installBtn.addEventListener('click', (e) => {
             // Hide our user interface that shows our A2HS button
             installBtn.style.display = 'none';
