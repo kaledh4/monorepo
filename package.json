@@ -14,7 +14,7 @@
     "build:the-map": "node scripts/build-app.mjs the-map",
     "build:the-coin": "node scripts/build-app.mjs the-coin",
     "build:the-strategy": "node scripts/build-app.mjs the-strategy",
-    "build:the-library": "node scripts/build-vite-app.mjs the-library",
+    "build:the-library": "node scripts/build-app.mjs the-library",
     "build:the-commander": "node scripts/build-app.mjs the-commander",
     "serve:the-shield": "http-server apps/the-shield -p 4200",
     "serve:the-frontier": "http-server apps/the-frontier -p 4201",
