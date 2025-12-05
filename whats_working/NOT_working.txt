@@ -1,0 +1,6 @@
+all 5 
+
+also need fixing and removing the other branch and leaving master as the only working branch 
+and yesterday I hit usage so many times 
+building should not include api calls 
+only DAILY BREIF.yml should include the daily api data filling approach 
