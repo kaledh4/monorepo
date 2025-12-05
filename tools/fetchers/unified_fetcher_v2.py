@@ -1062,22 +1062,25 @@ def analyze_the_library() -> Dict:
     
     # AI Analysis
     summaries = []
+    analysis = "Analysis temporarily unavailable"
     
     if news_articles:
         articles_text = "\n".join([f"{i+1}. {a['title']}" for i, a in enumerate(news_articles[:10])])
         
         prompt = f"""Pick 3 complex market/tech articles and simplify them.
-
+        
 HEADLINES:
 {articles_text}
 
 For each, provide an ELI5 summary and why it matters long-term.
+Also provide a brief general analysis of the knowledge landscape today.
 
 Return JSON:
 {{
   "summaries": [
     {{"title": "Title", "eli5": "Simple explanation", "long_term": "Why it matters long-term"}}
-  ]
+  ],
+  "analysis": "2-3 sentence overview of today's knowledge stream and key learning themes."
 }}"""
         
         system_prompt = "You are The Library - Alpha-Clarity Archive. Simplify complex market knowledge."
@@ -1090,6 +1093,7 @@ Return JSON:
                 if start != -1 and end > start:
                     parsed = json.loads(result[start:end])
                     summaries = parsed.get('summaries', summaries)
+                    analysis = parsed.get('analysis', analysis)
             except:
                 pass
     
@@ -1108,6 +1112,7 @@ Return JSON:
         'mission': 'Compute the daily human advancement rate, track breakthroughs, and signal long-term trajectory.',
         'scoring': scoring,
         'summaries': summaries,
+        'ai_analysis': analysis,
         'data_sources': [
             "xxxxxxxxx/shared_lib/ai_rnd_tracker",
             "xxxxxxxxx/shared_lib/quantum_papers",
