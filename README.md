@@ -3,17 +3,19 @@
 
 A unified dashboard orchestrator providing daily market insights through 7 specialized intelligence dashboards.
 
+🚀 **[Launch Dashboard](https://kaledh4.github.io/daily-alpha-loop/)** 
+
 ## 🎯 The Seven Dashboards
 
 | Dashboard | Mission | Focus | Link |
 |-----------|---------|-------|------|
-| **The Shield** | Market Fragility Monitor | Detect systemic stress before crashes | [🔗 Launch](the-shield/) |
-| **The Coin** | Crypto Momentum Scanner | Track BTC/ETH momentum shifts | [🔗 Launch](the-coin/) |
-| **The Map** | Macro & TASI Trendsetter | Align global macro with Saudi markets | [🔗 Launch](the-map/) |
-| **The Frontier** | Silicon Frontier Watch | Identify AI/tech breakthroughs | [🔗 Launch](the-frontier/) |
-| **The Strategy** | Unified Opportunity Radar | Synthesize cross-dashboard insights | [🔗 Launch](the-strategy/) |
-| **The Library** | Alpha-Clarity Archive | Simplify complex market knowledge | [🔗 Launch](the-library/) |
-| **The Commander** | Master Orchestrator | Generate daily “Morning Brief” | [🔗 Launch](the-commander/) |
+| **The Commander** | Master Orchestrator | Generate daily "Morning Brief" | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/) |
+| **The Shield** | Market Fragility Monitor | Detect systemic stress before crashes | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-shield/) |
+| **The Coin** | Crypto Momentum Scanner | Track BTC/ETH momentum shifts | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-coin/) |
+| **The Map** | Macro & TASI Trendsetter | Align global macro with Saudi markets | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-map/) |
+| **The Frontier** | Silicon Frontier Watch | Identify AI/tech breakthroughs | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-frontier/) |
+| **The Strategy** | Unified Opportunity Radar | Synthesize cross-dashboard insights | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-strategy/) |
+| **The Library** | Alpha-Clarity Archive | Simplify complex market knowledge | [🔗 Launch](https://kaledh4.github.io/daily-alpha-loop/the-library/) |
 
 ## 🚀 Quick Start
 
