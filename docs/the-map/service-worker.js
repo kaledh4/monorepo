@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'the-map-1764921900566';
+const CACHE_NAME = 'the-map-1764922483772';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
