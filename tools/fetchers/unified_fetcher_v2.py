@@ -370,38 +370,20 @@ def fetch_arxiv_papers():
 # ========================================
 
 def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int = 1500) -> Optional[str]:
-    """Call AI model with fallback"""
-    api_key = API_KEYS.get('OPENROUTER')
+    """Call AI model with priority: Grok → Gemini → OpenRouter"""
     
-    if not api_key or not REQUESTS_AVAILABLE:
-        logger.warning("AI not available (no API key or requests)")
+    if not REQUESTS_AVAILABLE:
+        logger.warning("AI not available (no requests library)")
         return None
     
-    model_map = {
-        'llama-70b': 'meta-llama/llama-3.3-70b-instruct:free',
-        'olmo-32b': 'allenai/olmo-3-32b-think:free',
-        'mistral-24b': 'mistralai/mistral-small-3.1-24b-instruct:free',
-        'dolphin-24b': 'cognitivecomputations/dolphin-mistral-24b-venice-edition:free',
-        'qwen-235b': 'qwen/qwen3-235b-a22b:free',
-        'glm-4': 'z-ai/glm-4.5-air:free',
-        'tongyi-30b': 'alibaba/tongyi-deepresearch-30b-a3b:free',
-        'nemotron-12b': 'nvidia/nemotron-nano-12b-v2-vl:free',
-        'chimera': 'tngtech/tng-r1t-chimera:free',
-        'kimi': 'moonshotai/kimi-k2:free',
-        'longcat': 'meituan/longcat-flash-chat:free',
-        'gemma-2b': 'google/gemma-3n-e2b-it:free',
-    }
-    
-    for model_key in models:
-        model_id = model_map.get(model_key, model_key)
+    # Try Grok API first (X.AI) - FREE
+    grok_key = os.environ.get('GROK_API_KEY') or os.environ.get('XAI_API_KEY')
+    if grok_key:
         try:
-            logger.info(f"  🤖 Calling {model_key}...")
-            
+            logger.info("  🤖 Calling Grok (X.AI)...")
             headers = {
-                'Authorization': f'Bearer {api_key}',
-                'Content-Type': 'application/json',
-                'HTTP-Referer': 'https://kaledh4.github.io/daily-alpha-loop/',
-                'X-Title': 'Daily Alpha Loop'
+                'Authorization': f'Bearer {grok_key}',
+                'Content-Type': 'application/json'
             }
             
             messages = []
@@ -410,31 +392,130 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
             messages.append({'role': 'user', 'content': prompt})
             
             payload = {
-                'model': model_id,
+                'model': 'grok-beta',  # Free tier model
                 'messages': messages,
                 'temperature': 0.7,
                 'max_tokens': max_tokens,
-                'response_format': {'type': 'json_object'}
+                'stream': False
             }
             
             response = requests.post(
-                'https://openrouter.ai/api/v1/chat/completions',
+                'https://api.x.ai/v1/chat/completions',
                 headers=headers,
                 json=payload,
                 timeout=60
             )
-            response.raise_for_status()
             
-            result = response.json()
-            if 'choices' in result and len(result['choices']) > 0:
-                content = result['choices'][0]['message']['content']
-                logger.info(f"  ✅ Success with {model_key}")
-                return content
+            if response.status_code == 200:
+                result = response.json()
+                if 'choices' in result and len(result['choices']) > 0:
+                    content = result['choices'][0]['message']['content']
+                    logger.info("  ✅ Success with Grok!")
+                    return content
+            else:
+                logger.warning(f"  Grok failed: {response.status_code}")
         
         except Exception as e:
-            logger.warning(f"  ❌ Failed {model_key}: {e}")
-            continue
+            logger.warning(f"  ❌ Grok error: {e}")
     
+    # Try Gemini API second (Google) - FREE
+    gemini_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GOOGLE_API_KEY')
+    if gemini_key:
+        try:
+            logger.info("  🤖 Calling Gemini (Google)...")
+            
+            # Gemini format: combine system and user prompts
+            full_prompt = f"{system_prompt}\n\n{prompt}"
+            
+            payload = {
+                'contents': [{
+                    'parts': [{'text': full_prompt}]
+                }],
+                'generationConfig': {
+                    'temperature': 0.7,
+                    'maxOutputTokens': max_tokens,
+                    'responseMimeType': 'application/json'
+                }
+            }
+            
+            url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={gemini_key}'
+            
+            response = requests.post(url, json=payload, timeout=60)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if 'candidates' in result and len(result['candidates']) > 0:
+                    content = result['candidates'][0]['content']['parts'][0]['text']
+                    logger.info("  ✅ Success with Gemini!")
+                    return content
+            else:
+                logger.warning(f"  Gemini failed: {response.status_code}")
+        
+        except Exception as e:
+            logger.warning(f"  ❌ Gemini error: {e}")
+    
+    # Fallback to OpenRouter (has free models)
+    openrouter_key = os.environ.get('OPENROUTER_KEY') or os.environ.get('OPENROUTER_API_KEY')
+    if openrouter_key:
+        model_map = {
+            'llama-70b': 'meta-llama/llama-3.3-70b-instruct:free',
+            'olmo-32b': 'allenai/olmo-3-32b-think:free',
+            'mistral-24b': 'mistralai/mistral-small-3.1-24b-instruct:free',
+            'dolphin-24b': 'cognitivecomputations/dolphin-mistral-24b-venice-edition:free',
+            'qwen-235b': 'qwen/qwen3-235b-a22b:free',
+            'glm-4': 'z-ai/glm-4.5-air:free',
+            'tongyi-30b': 'alibaba/tongyi-deepresearch-30b-a3b:free',
+            'nemotron-12b': 'nvidia/nemotron-nano-12b-v2-vl:free',
+            'chimera': 'tngtech/tng-r1t-chimera:free',
+            'kimi': 'moonshotai/kimi-k2:free',
+            'longcat': 'meituan/longcat-flash-chat:free',
+            'gemma-2b': 'google/gemma-3n-e2b-it:free',
+        }
+        
+        for model_key in models:
+            model_id = model_map.get(model_key, model_key)
+            try:
+                logger.info(f"  🤖 Calling OpenRouter ({model_key})...")
+                
+                headers = {
+                    'Authorization': f'Bearer {openrouter_key}',
+                    'Content-Type': 'application/json',
+                    'HTTP-Referer': 'https://kaledh4.github.io/daily-alpha-loop/',
+                    'X-Title': 'Daily Alpha Loop'
+                }
+                
+                messages = []
+                if system_prompt:
+                    messages.append({'role': 'system', 'content': system_prompt})
+                messages.append({'role': 'user', 'content': prompt})
+                
+                payload = {
+                    'model': model_id,
+                    'messages': messages,
+                    'temperature': 0.7,
+                    'max_tokens': max_tokens,
+                    'response_format': {'type': 'json_object'}
+                }
+                
+                response = requests.post(
+                    'https://openrouter.ai/api/v1/chat/completions',
+                    headers=headers,
+                    json=payload,
+                    timeout=60
+                )
+                response.raise_for_status()
+                
+                result = response.json()
+                if 'choices' in result and len(result['choices']) > 0:
+                    content = result['choices'][0]['message']['content']
+                    logger.info(f"  ✅ Success with {model_key}!")
+                    return content
+            
+            except Exception as e:
+                logger.warning(f"  ❌ Failed {model_key}: {e}")
+                continue
+    
+    logger.error("  ❌ All AI providers failed")
     return None
 
 # ========================================
