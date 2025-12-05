@@ -9,20 +9,20 @@
     "confidence": 0.85
   },
   "macro": {
-    "oil": 60.13999938964844,
-    "dxy": 99.08699798583984,
-    "gold": 4246.39990234375,
-    "sp500": 6866.14013671875,
+    "oil": 59.97999954223633,
+    "dxy": 99.08399963378906,
+    "gold": 4210.89990234375,
+    "sp500": 6872.10986328125,
     "tasi": 10626.150390625,
     "treasury_10y": 4.13700008392334
   },
   "tasi_mood": "Negative",
   "drivers": [
-    "Severely depressed oil prices impacting national revenue and corporate profits.",
-    "Extreme global risk-off sentiment, evidenced by record-high gold prices.",
-    "High US bond yields making equities less attractive and increasing capital costs."
+    "Severely low oil prices pressuring government revenues and corporate earnings.",
+    "Global risk-aversion, indicated by extremely high gold prices, discouraging investment in equities.",
+    "High US Treasury yields attracting capital away from emerging markets and increasing borrowing costs."
   ],
-  "ai_analysis": "The TASI faces significant headwinds from a severely depressed oil price, which directly threatens Saudi Arabia's economic outlook and corporate profitability. This is compounded by a major global flight to safety, evidenced by extremely high gold prices, suggesting investors are shunning risk assets. The combination of low oil revenue and a high-yield environment creates a challenging and negative outlook for the Saudi market.",
+  "ai_analysis": "Despite a bullish US stock market, the outlook for TASI is negative due to severely depressed oil prices, which directly impact Saudi Arabia's economy. This is compounded by a global flight-to-safety, evidenced by extremely high gold prices and elevated US yields, creating significant headwinds for the Saudi market.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/fed_speech_parser",
     "xxxxxxxxx/shared_lib/inflation_nowcast",

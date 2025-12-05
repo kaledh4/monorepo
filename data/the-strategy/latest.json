@@ -4,17 +4,17 @@
   "role": "Market Stance",
   "mission": "Read the market context, interpret cross-domain vectors, and determine today\u2019s stance.",
   "scoring": {
-    "stance_confidence": 3
+    "stance_confidence": 5
   },
-  "stance": "Defensive",
-  "mindset": "Protect capital while selectively scouting for high-conviction, early-stage opportunities.",
+  "stance": "Opportunistic",
+  "mindset": "Maintain a defensive core while selectively hunting for alpha in emerging narratives.",
   "inputs": {
     "risk": "LOW",
     "crypto": "Bearish",
     "macro": "Negative",
     "frontier": "Active"
   },
-  "ai_analysis": "The confluence of bearish crypto momentum and negative macroeconomic signals demands a capital preservation focus, reinforced by our low-risk tolerance. Despite the broad market weakness, an active frontier suggests isolated opportunities may arise in nascent sectors, warranting close monitoring but highly selective capital deployment.",
+  "ai_analysis": "The broad market outlook is negative, with both crypto-native momentum and macroeconomic factors pointing towards continued weakness. However, the low-risk environment and active frontier sectors suggest specific, isolated opportunities exist. This warrants a highly selective, opportunistic approach rather than broad market exposure.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/stance_engine",
     "xxxxxxxxx/shared_lib/momentum_blend"

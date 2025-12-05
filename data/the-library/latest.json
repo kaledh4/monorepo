@@ -7,24 +7,8 @@
     "progress_rate": 65,
     "uncertainty": 0.2
   },
-  "summaries": [
-    {
-      "title": "Markets Rise as Inflation Cools",
-      "eli5": "Imagine the economy is a car that was going too fast (high inflation). The person driving (the Federal Reserve) has been tapping the brakes (raising interest rates) to slow it down. A new report (PCE data) is like the speedometer showing the car is now at a safer speed. Investors are happy because it means the driver won't have to slam on the brakes, which could cause a crash (recession).",
-      "long_term": "Sustained lower inflation allows the central bank to stop raising, and eventually start lowering, interest rates. Cheaper borrowing costs encourage businesses to expand and invest, which fuels economic growth and can support higher stock market valuations over time. It signals a potential end to the economic 'braking' period."
-    },
-    {
-      "title": "Broadcom Stock Soars on Google AI Chip Demand",
-      "eli5": "Imagine Broadcom makes special, super-powerful Lego bricks (computer chips). Google is building a giant, super-smart robot (its Gemini AI). To make the robot work, Google needs a huge number of Broadcom's special bricks. Because everyone knows Google is buying so many, they believe Broadcom will make a lot of money, so more people want to own a piece of the company (its stock).",
-      "long_term": "The AI boom requires immense computing power. This means the companies that design and build the underlying hardware (the 'shovels' in the AI gold rush) are critical. Long-term success in AI isn't just about software; it's heavily dependent on these specialized chip makers, placing them in a powerful and profitable position for years to come."
-    },
-    {
-      "title": "EU Moves to Unify Crypto Rules Amid IMF Warnings",
-      "eli5": "Imagine cryptocurrency is a new, giant playground with different games. Right now, every town has its own confusing set of rules. The European Union (a big group of towns) wants to create one single rulebook for everyone to follow, making it simpler and safer. Meanwhile, a global safety monitor (the IMF) is pointing to one specific game (stablecoins) and warning that it could be wobbly and needs to be watched carefully.",
-      "long_term": "Standardized regulation is a key step for crypto's maturation. Clear rules can attract large, institutional investors and increase mainstream adoption by providing predictability and safety. This marks a shift from a 'wild west' environment to a more integrated part of the global financial system, which is necessary for long-term growth and stability."
-    }
-  ],
-  "ai_analysis": "Today's knowledge landscape is focused on major transitions. Macro-economic data is signaling a potential shift in central bank policy away from fighting inflation, while the AI revolution continues to reshape the tech hardware market. Simultaneously, foundational rule-setting for emerging asset classes like crypto is accelerating, indicating a global move towards integrating new technologies into established frameworks.",
+  "summaries": [],
+  "ai_analysis": "Analysis temporarily unavailable",
   "data_sources": [
     "xxxxxxxxx/shared_lib/ai_rnd_tracker",
     "xxxxxxxxx/shared_lib/quantum_papers",
