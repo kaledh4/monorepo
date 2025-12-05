@@ -6,15 +6,15 @@
   "scoring": {
     "stance_confidence": 5
   },
-  "stance": "Neutral",
-  "mindset": "Wait for clarity",
+  "stance": "Opportunistic",
+  "mindset": "Protect capital from macro headwinds while selectively deploying into high-conviction, frontier opportunities.",
   "inputs": {
     "risk": "LOW",
     "crypto": "Bearish",
     "macro": "Negative",
     "frontier": "Active"
   },
-  "ai_analysis": "Analysis temporarily unavailable",
+  "ai_analysis": "The confluence of negative macro signals and bearish crypto momentum advises a cautious overall posture. However, a low systemic risk environment and an active frontier landscape create specific, isolated opportunities for alpha generation. The optimal strategy is to remain defensively positioned in major assets while actively hunting for alpha in these niche areas.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/stance_engine",
     "xxxxxxxxx/shared_lib/momentum_blend"

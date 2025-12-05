@@ -9,20 +9,20 @@
     "confidence": 0.85
   },
   "macro": {
-    "oil": 59.97999954223633,
-    "dxy": 99.0739974975586,
-    "gold": 4241.0,
-    "sp500": 6866.27978515625,
+    "oil": 60.02000045776367,
+    "dxy": 99.04499816894531,
+    "gold": 4245.2001953125,
+    "sp500": 6867.0,
     "tasi": 10626.150390625,
     "treasury_10y": 4.13100004196167
   },
   "tasi_mood": "Negative",
   "drivers": [
-    "Severely low oil price impacting government revenue and energy sector profits.",
-    "Record-high gold price indicating a major global 'risk-off' sentiment and flight to safety.",
-    "Strong US Dollar (DXY) and high US 10Y yields tightening financial conditions for emerging markets."
+    "Low Oil Price ($60.02) pressuring government revenues and key sectors.",
+    "Extremely high Gold Price ($4245.20) indicating major global risk aversion.",
+    "Elevated US 10Y Yield (4.13%) increasing capital outflow pressures from emerging markets."
   ],
-  "ai_analysis": "The TASI faces a highly challenging environment dominated by a severely depressed oil price, which is the lifeblood of the Saudi economy. This is compounded by a global macro backdrop of extreme risk aversion, evidenced by soaring gold, which typically leads to capital outflows from emerging markets like Saudi Arabia.",
+  "ai_analysis": "The TASI faces significant headwinds from a low oil price, which directly impacts the Kingdom's economic outlook and corporate earnings. This is compounded by a global flight to safety, evidenced by extremely high gold prices, and attractive US yields pulling capital away from emerging markets. The strength in US equities is unlikely to offset these direct and powerful negative domestic and global pressures.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/fed_speech_parser",
     "xxxxxxxxx/shared_lib/inflation_nowcast",

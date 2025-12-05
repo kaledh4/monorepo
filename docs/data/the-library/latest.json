@@ -7,8 +7,24 @@
     "progress_rate": 65,
     "uncertainty": 0.2
   },
-  "summaries": [],
-  "ai_analysis": "Analysis temporarily unavailable",
+  "summaries": [
+    {
+      "title": "EU may consolidate crypto regulations, IMF warns of stablecoin risk: Global Express",
+      "eli5": "Imagine all the countries in Europe are a big playground. Right now, each country has different rules for playing with a new toy called cryptocurrency. The EU wants to create one set of rules for the whole playground to make it safer and fairer for everyone. Separately, a big global banker (the IMF) is worried that 'stablecoins' \u2013 a type of crypto tied to real money like dollars \u2013 might not be as stable as they claim and could break, causing problems for everyone's piggy banks.",
+      "long_term": "Standardized rules in a major economic bloc like the EU would make crypto less of a 'wild west' and more like a normal part of the financial system. This could attract big, cautious investors and banks. However, warnings about stablecoins highlight the ongoing risk and could lead to stricter controls, shaping whether these digital dollars become a trusted part of our future economy or a footnote in financial history."
+    },
+    {
+      "title": "Micron Technology (MU) Falls Hard on Crucial Business Exit",
+      "eli5": "A company named Micron makes special memory chips for computers, like the part of your brain that remembers what you are doing right now. They decided to stop making one very advanced, but very difficult, type of this memory. Investors got worried that this was a sign of bigger problems, so many sold their shares in the company, which made its price go down.",
+      "long_term": "This shows how incredibly competitive and expensive it is to stay at the cutting edge of technology. Micron is choosing to focus on products it can make profitably. For the world, this means fewer companies are producing the most advanced memory chips, which could impact the cost and innovation of future high-powered computers, AI systems, and gadgets."
+    },
+    {
+      "title": "What Texas\u2019 recent Bitcoin purchase signals to the rest of the US in a market downturn",
+      "eli5": "Imagine Texas is a very rich and influential person. They just bought some Bitcoin, which is like digital gold, even though its price was down. This is like a celebrity wearing a new brand of sneakers. It sends a message to other important people (other states, big companies) that Bitcoin is a serious thing to own for the future, not just a passing trend.",
+      "long_term": "When a major government-related entity invests public funds into a volatile asset like Bitcoin, it signals a major step towards mainstream acceptance. This move could encourage other states and large institutions to follow, creating a foundation of demand that might help stabilize Bitcoin's price over time and integrate it more deeply into the traditional financial system."
+    }
+  ],
+  "ai_analysis": "Today's knowledge stream is a rapid convergence of technology, finance, and regulation. The key themes are the struggle to apply old rules to new digital assets, the intense pressure on tech companies to innovate profitably, and the slow but steady adoption of once-fringe ideas by mainstream institutions.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/ai_rnd_tracker",
     "xxxxxxxxx/shared_lib/quantum_papers",
