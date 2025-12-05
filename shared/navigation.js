@@ -1,13 +1,13 @@
 // SHARED NAVIGATION COMPONENT - Used by all dashboards
 
 const DASHBOARDS = [
-    { id: 'the-commander', name: 'The Commander', mission: 'Morning Brief', emoji: '⭐' },
-    { id: 'the-shield', name: 'The Shield', mission: 'Risk Monitor', emoji: '🛡️' },
-    { id: 'the-coin', name: 'The Coin', mission: 'Crypto Scanner', emoji: '🪙' },
-    { id: 'the-map', name: 'The Map', mission: 'Macro Trends', emoji: '🗺️' },
-    { id: 'the-frontier', name: 'The Frontier', mission: 'AI Breakthroughs', emoji: '🚀' },
-    { id: 'the-strategy', name: 'The Strategy', mission: 'Opportunity Radar', emoji: '🎯' },
-    { id: 'the-library', name: 'The Library', mission: 'Knowledge Archive', emoji: '📚' }
+    { id: 'the-commander', name: 'The Commander', mission: 'Morning Brief', icon: '../static/icons/icons8-commander-of-the-canadian-navy-48.png' },
+    { id: 'the-shield', name: 'The Shield', mission: 'Risk Monitor', icon: '../static/icons/icons8-shield-48.png' },
+    { id: 'the-coin', name: 'The Coin', mission: 'Crypto Scanner', icon: '../static/icons/icons8-coin-64.png' },
+    { id: 'the-map', name: 'The Map', mission: 'Macro Trends', icon: '../static/icons/icons8-map-48.png' },
+    { id: 'the-frontier', name: 'The Frontier', mission: 'AI Breakthroughs', icon: '../static/icons/icons8-ai-48.png' },
+    { id: 'the-strategy', name: 'The Strategy', mission: 'Opportunity Radar', icon: '../static/icons/icons8-strategy-48.png' },
+    { id: 'the-library', name: 'The Library', mission: 'Knowledge Archive', icon: '../static/icons/icons8-library-48.png' }
 ];
 
 function renderNavigation(currentDashboard) {
@@ -17,7 +17,8 @@ function renderNavigation(currentDashboard) {
 
         return `
       <a href="${url}" class="nav-card ${isActive ? 'active' : ''}">
-        <h3>${dash.emoji} ${dash.name}</h3>
+        <img src="${dash.icon}" alt="${dash.name}" class="nav-icon" style="width: 32px; height: 32px; margin-bottom: 8px;">
+        <h3>${dash.name}</h3>
         <p>${dash.mission}</p>
       </a>
     `;
@@ -32,7 +33,10 @@ function getSourceBadge(dashboardId) {
 
     const url = dashboardId === 'the-commander' ? '../the-commander/' : `../${dashboardId}/`;
 
-    return `<a href="${url}" class="source-badge" title="View ${dash.name}">${dash.emoji} ${dash.name}</a>`;
+    return `<a href="${url}" class="source-badge" title="View ${dash.name}">
+        <img src="${dash.icon}" alt="${dash.name}" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 4px;">
+        ${dash.name}
+    </a>`;
 }
 
 function formatTimestamp(timestamp) {

@@ -1174,8 +1174,8 @@ def analyze_the_commander() -> Dict:
     # AI Generation of Morning Brief
     morning_brief = {}
     
-    prompt = f"""Create a 30-Second Coffee Read Morning Brief.
-
+    prompt = f"""Create a 4-Minute Deep Dive Morning Brief.
+    
 DATA FROM ALL DASHBOARDS:
 
 THE SHIELD (Risk):
@@ -1201,23 +1201,24 @@ THE LIBRARY (Knowledge):
 {len(library_data.get('summaries', []))} summaries available
 
 INSTRUCTIONS:
-Create a structured Morning Brief with these EXACT fields:
+Create a comprehensive, structured Morning Brief (approx. 4 minutes read time).
+Go BEYOND surface-level summaries. Synthesize the data into a coherent narrative.
 
 Return JSON:
 {{
   "weather_of_the_day": "One word: Stormy / Cloudy / Sunny / Volatile / Foggy",
   "top_signal": "The single most important data point today",
-  "why_it_matters": "2 sentences explaining why",
-  "cross_dashboard_convergence": "How risk + crypto + macro + breakthroughs connect",
+  "why_it_matters": "Detailed explanation (3-4 sentences) of why this signal is critical right now.",
+  "cross_dashboard_convergence": "A deep paragraph (5-6 sentences) connecting Risk, Crypto, Macro, and Tech. How do these forces interact today? Where is the friction? Where is the flow?",
   "action_stance": "Sit tight / Accumulate / Cautious / Aggressive / Review markets",
-  "optional_deep_insight": "One optional paragraph for advanced users",
+  "optional_deep_insight": "Two paragraphs of advanced market theory applied to today's data. Connect the dots for a professional trader.",
   "clarity_level": "High / Medium / Low based on data convergence",
-  "summary_sentence": "Risk shows the environment, crypto shows sentiment, macro shows the wind, breakthroughs show the future, strategy shows the stance, and knowledge shows the long-term signal — combine all six to guide the user clearly through today."
+  "summary_sentence": "A final, powerful closing thought that synthesizes the entire briefing."
 }}"""
     
-    system_prompt = "You are The Commander - Master Orchestrator. Generate the ultimate daily Morning Brief."
+    system_prompt = "You are The Commander - Master Orchestrator. Generate the ultimate daily Morning Brief. Be deep, insightful, and professional."
     
-    result = call_ai(prompt, system_prompt, ['llama-70b', 'olmo-32b'], max_tokens=2000)
+    result = call_ai(prompt, system_prompt, ['llama-70b', 'olmo-32b'], max_tokens=3000)
     if result:
         try:
             start = result.find('{')
@@ -1275,12 +1276,23 @@ Return JSON:
 # ========================================
 
 def main():
+    parser = argparse.ArgumentParser(description='Unified Data Fetcher V2 for Daily Alpha Loop')
+    parser.add_argument('--all', action='store_true', help='Run for all dashboards (default)')
+    parser.add_argument('--app', type=str, help='Run for specific dashboard (e.g., the-shield)')
+    args = parser.parse_args()
+
+    # Default to all if no specific app is requested
+    run_all = args.all or not args.app
+    target_app = args.app
+
     logger.info("=" * 60)
     logger.info("🚀 DAILY ALPHA LOOP - UNIFIED FETCHER V2")
     logger.info(f"📅 {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")
     logger.info("=" * 60)
     
     # STEP 1: Fetch ALL data ONCE (centralized)
+    # We fetch everything regardless of target app because of dependencies (e.g. Commander needs everything)
+    # Optimization: Could selectively fetch based on app, but for now we keep it simple and robust.
     logger.info("\n" + "=" * 60)
     logger.info("STEP 1: CENTRALIZED DATA FETCHING")
     logger.info("=" * 60)
@@ -1310,58 +1322,54 @@ def main():
     
     dashboards = []
     
+    # Helper to save dashboard data
+    def save_dashboard(data, folder_name):
+        dashboards.append(data)
+        (DATA_DIR / folder_name).mkdir(parents=True, exist_ok=True)
+        (DATA_DIR / folder_name / 'latest.json').write_text(json.dumps(data, indent=2), encoding='utf-8')
+        logger.info(f"✅ Saved {folder_name}")
+
     # Load Risk (1) and Macro (3)
-    logger.info("\n📊 Wave 1: Risk + Macro")
-    shield = analyze_the_shield()
-    dashboards.append(shield)
-    (DATA_DIR / 'the-shield').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-shield' / 'latest.json').write_text(json.dumps(shield, indent=2), encoding='utf-8')
+    if run_all or target_app == 'the-shield':
+        logger.info("\n📊 Wave 1: Risk (The Shield)")
+        save_dashboard(analyze_the_shield(), 'the-shield')
+
+    if run_all or target_app == 'the-map':
+        logger.info("\n📊 Wave 1: Macro (The Map)")
+        save_dashboard(analyze_the_map(), 'the-map')
     
-    map_analysis = analyze_the_map()
-    dashboards.append(map_analysis)
-    (DATA_DIR / 'the-map').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-map' / 'latest.json').write_text(json.dumps(map_analysis, indent=2), encoding='utf-8')
-    
-    time.sleep(2)  # Wait between waves
+    if run_all: time.sleep(2)  # Wait between waves
     
     # Load Crypto (2) and AI Race (4)
-    logger.info("\n📊 Wave 2: Crypto + Frontier")
-    coin = analyze_the_coin()
-    dashboards.append(coin)
-    (DATA_DIR / 'the-coin').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-coin' / 'latest.json').write_text(json.dumps(coin, indent=2), encoding='utf-8')
+    if run_all or target_app == 'the-coin':
+        logger.info("\n📊 Wave 2: Crypto (The Coin)")
+        save_dashboard(analyze_the_coin(), 'the-coin')
+
+    if run_all or target_app == 'the-frontier':
+        logger.info("\n📊 Wave 2: Frontier (The Frontier)")
+        save_dashboard(analyze_the_frontier(), 'the-frontier')
     
-    frontier = analyze_the_frontier()
-    dashboards.append(frontier)
-    (DATA_DIR / 'the-frontier').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-frontier' / 'latest.json').write_text(json.dumps(frontier, indent=2), encoding='utf-8')
-    
-    time.sleep(2)
+    if run_all: time.sleep(2)
     
     # Load Free Knowledge (6)
-    logger.info("\n📊 Wave 3: Library")
-    library = analyze_the_library()
-    dashboards.append(library)
-    (DATA_DIR / 'the-library').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-library' / 'latest.json').write_text(json.dumps(library, indent=2), encoding='utf-8')
+    if run_all or target_app == 'the-library':
+        logger.info("\n📊 Wave 3: Library (The Library)")
+        save_dashboard(analyze_the_library(), 'the-library')
     
-    time.sleep(2)
+    if run_all: time.sleep(2)
     
     # Generate Strategy (5)
-    logger.info("\n📊 Wave 4: Strategy")
-    strategy = analyze_the_strategy()
-    dashboards.append(strategy)
-    (DATA_DIR / 'the-strategy').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-strategy' / 'latest.json').write_text(json.dumps(strategy, indent=2), encoding='utf-8')
+    if run_all or target_app == 'the-strategy':
+        logger.info("\n📊 Wave 4: Strategy (The Strategy)")
+        save_dashboard(analyze_the_strategy(), 'the-strategy')
     
-    time.sleep(2)
+    if run_all: time.sleep(2)
     
     # Finally, generate Master Orchestrator (7)
-    logger.info("\n📊 Wave 5: The Commander")
-    commander = analyze_the_commander()
-    dashboards.append(commander)
-    (DATA_DIR / 'the-commander').mkdir(parents=True, exist_ok=True)
-    (DATA_DIR / 'the-commander' / 'latest.json').write_text(json.dumps(commander, indent=2), encoding='utf-8')
+    # The Commander usually needs all previous data, but we'll allow running it alone if requested
+    if run_all or target_app == 'the-commander':
+        logger.info("\n📊 Wave 5: The Commander")
+        save_dashboard(analyze_the_commander(), 'the-commander')
     
     # Summary
     logger.info("\n" + "=" * 60)

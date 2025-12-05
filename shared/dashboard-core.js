@@ -8,8 +8,21 @@ function renderHeader(data) {
     const header = document.querySelector('.header');
     if (!header) return;
 
+    // Find the dashboard config to get the icon
+    // We assume DASHBOARDS is available from navigation.js
+    const dashConfig = typeof DASHBOARDS !== 'undefined'
+        ? DASHBOARDS.find(d => d.id === (window.DASHBOARD_NAME || data.dashboard))
+        : null;
+
+    const iconHtml = dashConfig && dashConfig.icon
+        ? `<img src="${dashConfig.icon}" alt="${data.name}" style="width: 48px; height: 48px; vertical-align: middle; margin-right: 10px;">`
+        : '';
+
     header.innerHTML = `
-        <h1>${data.name}</h1>
+        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+            ${iconHtml}
+            <h1 style="margin: 0;">${data.name}</h1>
+        </div>
         <p style="font-size: 1.4rem; color: #90cdf4; font-weight: 600; margin-bottom: 10px;">${data.role}</p>
         <p style="max-width: 800px; margin: 0 auto; color: #cbd5e0;">${data.mission}</p>
         <div class="timestamp">Updated: ${data.last_update || data.timestamp || 'Just now'}</div>

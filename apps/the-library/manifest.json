@@ -1,6 +1,6 @@
 {
-    "name": "Dashboard Orchestrator Pro",
-    "short_name": "DashOrch",
+    "name": "The Library - Daily Alpha Loop",
+    "short_name": "The Library",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#0f172a",

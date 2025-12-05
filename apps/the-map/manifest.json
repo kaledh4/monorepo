@@ -1,6 +1,6 @@
 {
-    "name": "Dashboard Orchestrator Pro",
-    "short_name": "DashOrch",
+    "name": "The Map - Daily Alpha Loop",
+    "short_name": "The Map",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#0f172a",

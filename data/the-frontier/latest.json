@@ -187,31 +187,27 @@
   },
   "breakthroughs": [
     {
-      "title": "Decoy-state quantum key distribution over 227 km with frequency-converted telecom single-photon source",
-      "why_it_matters": "Achieves long-distance quantum encryption in real-world fiber infrastructure, critical for secure communication networks."
+      "title": "Value Gradient Guidance for Flow Matching Alignment",
+      "why_it_matters": "Enables robust alignment of AI-generated outputs with human preferences through flow-based gradient optimization, critical for ethical AI deployment."
     },
     {
-      "title": "Universal Weight Subspace Hypothesis in AI",
-      "why_it_matters": "Theoretical framework to understand generalization in neural networks, enabling more efficient and interpretable AI models."
+      "title": "pHapCompass for Polyploid Haplotype Phasing",
+      "why_it_matters": "Accelerates genomic research by resolving complex DNA inheritance patterns in polyploid species, advancing precision medicine and agriculture."
     },
     {
-      "title": "NeuralRemaster: Phase-Preserving Diffusion for Structure-Aligned Generation",
-      "why_it_matters": "Advances in generating high-fidelity 3D structures from multimodal data, accelerating drug discovery and materials science."
+      "title": "227 km Decoy-State Quantum Key Distribution",
+      "why_it_matters": "Demonstrates scalable quantum cryptography infrastructure, closing the gap between lab experiments and real-world secure communication networks."
     },
     {
-      "title": "pHapCompass: Probabilistic Assembly and Uncertainty Quantification",
-      "why_it_matters": "Revolutionizes polyploid genome analysis by resolving phase-ambiguous haplotypes in crops like wheat, boosting agricultural genomics."
+      "title": "NeuralRemaster for Structure-Aligned Generation",
+      "why_it_matters": "Enables high-fidelity video synthesis while preserving physical structure constraints, bridging the gap between visual media and robotics training data."
     },
     {
-      "title": "Pump Free Microwave-Optical Quantum Transduction",
-      "why_it_matters": "Enables low-energy quantum signal conversion, crucial for scalable quantum communication and sensing systems."
-    },
-    {
-      "title": "Deep Infant Brain Segmentation from Multi-Contrast MRI",
-      "why_it_makes": "Improves early detection of neurodevelopmental disorders through automated fetal brain analysis, accelerating medical diagnostics."
+      "title": "Semiconductor Phase Diagram of 2D Hyperbolic Dirac Liquids",
+      "why_it_matters": "Reveals novel electronic properties in hyperbolic materials, opening pathways for ultra-efficient computing architectures."
     }
   ],
-  "ai_analysis": "Quantum computing and advanced manufacturing show the strongest frontier progress with experimental and theoretical leaps (e.g., quantum key distribution, spin qubit advancements). AI breakthroughs focus on interpretability and alignment, while biotechnology and neurotech hit critical milestones in data resolution. Robotics and materials science integration (e.g., physics-aligned video generation) signals interdisciplinary convergence as a frontier area.",
+  "ai_analysis": "These breakthroughs span sensing, security, and quantum computing\u2014areas where theoretical advances are rapidly transitioning to practical applications. The semiconductor and quantum findings suggest materials science remains a critical frontier, while biology and AI alignment research address cross-disciplinary challenges. Notably absent are incremental cloud/ML optimizations, indicating focus on higher-risk/higher-reward domains. The field remains dominated by hardware-software co-design innovations rather than algorithm-only improvements.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/ai_rnd",
     "xxxxxxxxx/shared_lib/quantum",
