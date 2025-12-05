@@ -2,10 +2,10 @@
   "dashboard": "the-coin",
   "name": "The Coin",
   "mission": "Crypto Momentum Scanner",
-  "btc_price": 92455.8671875,
-  "eth_price": 3180.76904296875,
+  "btc_price": 92161.1484375,
+  "eth_price": 3167.772216796875,
   "momentum": "Neutral",
-  "rsi": 39.59288802936983,
+  "rsi": 39.35715668928122,
   "trend": "Bearish",
   "fear_and_greed": {
     "value": 28,
