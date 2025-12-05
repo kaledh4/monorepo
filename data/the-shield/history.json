@@ -283,5 +283,62 @@
       "news_summary": "Check latest news sources"
     },
     "days_remaining": 358
+  },
+  {
+    "last_update": "2025-12-05 06:22:39 UTC",
+    "risk_assessment": {
+      "score": 10.7,
+      "level": "LOW",
+      "color": "#28a745"
+    },
+    "metrics": [
+      {
+        "name": "10Y Treasury Auction Bid-to-Cover",
+        "value": "2.43x",
+        "signal": "NORMAL",
+        "desc": "Demand strength"
+      },
+      {
+        "name": "USD/JPY",
+        "value": "154.64",
+        "signal": "HIGH STRESS",
+        "desc": "USD/JPY current level"
+      },
+      {
+        "name": "USD/CNH",
+        "value": "7.0666",
+        "signal": "NORMAL",
+        "desc": "USD/CNH current level"
+      },
+      {
+        "name": "MOVE Index",
+        "value": "65.69",
+        "signal": "NORMAL",
+        "desc": "MOVE Index current level"
+      },
+      {
+        "name": "10Y Treasury Yield",
+        "value": "4.11%",
+        "signal": "NORMAL",
+        "desc": "10Y Treasury Yield current level"
+      },
+      {
+        "name": "VIX",
+        "value": "15.78",
+        "signal": "NORMAL",
+        "desc": "VIX current level"
+      },
+      {
+        "name": "CBON ETF",
+        "value": "$22.52",
+        "signal": "NORMAL",
+        "desc": "CBON ETF current level"
+      }
+    ],
+    "ai_insights": {
+      "crash_analysis": "AI analysis unavailable",
+      "news_summary": "Check latest news sources"
+    },
+    "days_remaining": 357
   }
 ]

@@ -1,7 +1,7 @@
 {
-  "last_update": "2025-12-04 20:11:05 UTC",
+  "last_update": "2025-12-05 06:22:39 UTC",
   "risk_assessment": {
-    "score": 14.3,
+    "score": 10.7,
     "level": "LOW",
     "color": "#28a745"
   },
@@ -13,20 +13,20 @@
       "desc": "Demand strength"
     },
     {
+      "name": "USD/JPY",
+      "value": "154.64",
+      "signal": "HIGH STRESS",
+      "desc": "USD/JPY current level"
+    },
+    {
       "name": "USD/CNH",
-      "value": "7.0696",
+      "value": "7.0666",
       "signal": "NORMAL",
       "desc": "USD/CNH current level"
     },
     {
-      "name": "VIX",
-      "value": "15.93",
-      "signal": "NORMAL",
-      "desc": "VIX current level"
-    },
-    {
       "name": "MOVE Index",
-      "value": "66.46",
+      "value": "65.69",
       "signal": "NORMAL",
       "desc": "MOVE Index current level"
     },
@@ -37,14 +37,14 @@
       "desc": "10Y Treasury Yield current level"
     },
     {
-      "name": "USD/JPY",
-      "value": "155.01",
-      "signal": "CRITICAL SHOCK",
-      "desc": "USD/JPY current level"
+      "name": "VIX",
+      "value": "15.78",
+      "signal": "NORMAL",
+      "desc": "VIX current level"
     },
     {
       "name": "CBON ETF",
-      "value": "$22.56",
+      "value": "$22.52",
       "signal": "NORMAL",
       "desc": "CBON ETF current level"
     }
@@ -53,5 +53,5 @@
     "crash_analysis": "AI analysis unavailable",
     "news_summary": "Check latest news sources"
   },
-  "days_remaining": 358
+  "days_remaining": 357
 }

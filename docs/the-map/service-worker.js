@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'the-map-1764913496830';
+const CACHE_NAME = 'the-map-1764915785374';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
@@ -17,23 +17,6 @@ const ASSETS_TO_CACHE = [
   "./icons/icon-512x512.png",
   "./icons/icon-512x512.svg",
   "./interactive.css",
-  "./service-worker.js",
-  "./static/app.js",
-  "./static/icons/favicon.ico",
-  "./static/icons/icon-192.png",
-  "./static/icons/icon-192x192.png",
-  "./static/icons/icon-192x192.svg",
-  "./static/icons/icon-256x256.png",
-  "./static/icons/icon-256x256.svg",
-  "./static/icons/icon-384x384.png",
-  "./static/icons/icon-384x384.svg",
-  "./static/icons/icon-512.png",
-  "./static/icons/icon-512x512.png",
-  "./static/icons/icon-512x512.svg",
-  "./static/interactive.css",
-  "./static/manifest.json",
-  "./static/style.css",
-  "./static/sw.js",
   "./style.css",
   "./sw.js"
 ];
