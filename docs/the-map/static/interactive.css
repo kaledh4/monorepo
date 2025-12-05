@@ -1,0 +1,662 @@
+/* ==========================================
+   INTERACTIVE FEATURES STYLES
+   ========================================== */
+
+/* ==========================================
+   1. TOOLTIP SYSTEM
+   ========================================== */
+
+.tooltip-icon {
+    display: inline-block;
+    cursor: help;
+    color: var(--accent-color);
+    font-size: 0.8em;
+    margin-left: 4px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.tooltip-icon:hover {
+    opacity: 1;
+}
+
+.tooltip-popup {
+    position: fixed;
+    max-width: 300px;
+    background: rgba(20, 20, 30, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--accent-color);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 10px 40px rgba(59, 130, 246, 0.3);
+    z-index: 10000;
+    animation: tooltipFadeIn 0.2s ease-out;
+}
+
+.tooltip-popup.hidden {
+    display: none;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-header strong {
+    color: var(--accent-color);
+    font-size: 0.95rem;
+}
+
+.tooltip-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.tooltip-close:hover {
+    color: var(--text-primary);
+}
+
+.tooltip-content {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.tooltip-historical {
+    font-size: 0.8rem;
+    color: var(--warning);
+    background: rgba(245, 158, 11, 0.1);
+    padding: 0.5rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+}
+
+/* ==========================================
+   2. SPARKLINE CHARTS
+   ========================================== */
+
+.sparkline-container {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.sparkline-chart {
+    display: block;
+}
+
+/* Mobile sparkline adjustments */
+@media (max-width: 480px) {
+    .sparkline-container {
+        margin-left: 4px;
+    }
+
+    .sparkline-chart {
+        width: 40px;
+        height: 16px;
+    }
+}
+
+/* ==========================================
+   3. INTERACTIVE GAUGE
+   ========================================== */
+
+.gauge-svg {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.gauge-fill {
+    transition: stroke-dasharray 1s ease-out;
+}
+
+/* Animate gauge on load */
+@keyframes gaugeAnimation {
+    from {
+        stroke-dasharray: 0 251;
+    }
+}
+
+.gauge-svg .gauge-fill {
+    animation: gaugeAnimation 1.5s ease-out;
+}
+
+/* ==========================================
+   4. SENTIMENT POLL
+   ========================================== */
+
+.sentiment-poll {
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.poll-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.poll-question {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.poll-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.poll-btn {
+    background: var(--glass-bg);
+    border: 2px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 1rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.poll-btn:hover {
+    border-color: var(--accent-color);
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+.poll-btn:active {
+    transform: translateY(0);
+}
+
+.poll-icon {
+    font-size: 1.5rem;
+}
+
+.poll-bullish:hover {
+    border-color: var(--success);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.poll-bearish:hover {
+    border-color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.poll-results {
+    margin-top: 1rem;
+}
+
+.result-bar {
+    display: flex;
+    height: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.result-bullish {
+    background: linear-gradient(90deg, var(--success), #34d399);
+    transition: width 0.8s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.result-bearish {
+    background: linear-gradient(90deg, #f87171, var(--danger));
+    transition: width 0.8s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.result-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.result-label {
+    color: var(--text-secondary);
+}
+
+.result-label strong {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+}
+
+.poll-note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-align: center;
+    font-style: italic;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================
+   5. PERSONA TOGGLE
+   ========================================== */
+
+.persona-toggle {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--glass-bg);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+}
+
+.persona-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.persona-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.persona-btn.active {
+    background: var(--accent-color);
+    color: white;
+    font-weight: 600;
+}
+
+.persona-note {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+    border-left: 4px solid var(--accent-color);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.trader-note {
+    border-left-color: var(--warning);
+}
+
+.investor-note {
+    border-left-color: var(--success);
+}
+
+.highlight-trader {
+    background: rgba(245, 158, 11, 0.1);
+    padding: 0.5rem;
+    margin: -0.5rem;
+    border-radius: 6px;
+    animation: highlightPulse 2s ease-in-out;
+}
+
+@keyframes highlightPulse {
+
+    0%,
+    100% {
+        background: rgba(245, 158, 11, 0.1);
+    }
+
+    50% {
+        background: rgba(245, 158, 11, 0.2);
+    }
+}
+
+/* ==========================================
+   6. SHARE BUTTON
+   ========================================== */
+
+.share-btn {
+    background: linear-gradient(135deg, var(--accent-color), #8b5cf6);
+    border: none;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.share-btn:active {
+    transform: translateY(0);
+}
+
+.share-notification {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(16, 185, 129, 0.95);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    transition: bottom 0.3s ease-out;
+}
+
+.share-notification.show {
+    bottom: 2rem;
+}
+
+/* ==========================================
+   7. EVENT COUNTDOWN BADGES
+   ========================================== */
+
+.countdown-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--warning), #f97316);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+    animation: countdownPulse 2s ease-in-out infinite;
+}
+
+@keyframes countdownPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ==========================================
+   8. MOBILE OPTIMIZATIONS
+   ========================================== */
+
+@media (max-width: 768px) {
+    .tooltip-popup {
+        max-width: 280px;
+        left: 10px !important;
+        right: 10px;
+    }
+
+    .poll-buttons {
+        gap: 0.75rem;
+    }
+
+    .poll-btn {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .poll-icon {
+        font-size: 1.2rem;
+    }
+
+    .persona-toggle {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .persona-btn {
+        flex: 1;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .share-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .sentiment-poll {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tooltip-popup {
+        font-size: 0.85rem;
+    }
+
+    .poll-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .result-bar {
+        height: 30px;
+    }
+
+    .result-labels {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .persona-toggle {
+        padding: 0.2rem;
+    }
+
+    .persona-btn {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+    }
+}
+
+/* ==========================================
+   9. RTL SUPPORT
+   ========================================== */
+
+body.rtl .tooltip-icon {
+    margin-left: 0;
+    margin-right: 4px;
+}
+
+body.rtl .sparkline-container {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+body.rtl .persona-note {
+    border-left: none;
+    border-right: 4px solid var(--accent-color);
+}
+
+body.rtl .trader-note {
+    border-right-color: var(--warning);
+}
+
+body.rtl .investor-note {
+    border-right-color: var(--success);
+}
+
+body.rtl .countdown-badge {
+    margin-left: 0;
+    margin-right: 0.5rem;
+}
+
+/* ==========================================
+   10. DARK MODE ENHANCEMENTS
+   ========================================== */
+
+.glass-panel-inner {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+/* ==========================================
+   11. ACCESSIBILITY
+   ========================================== */
+
+.poll-btn:focus,
+.persona-btn:focus,
+.share-btn:focus,
+.tooltip-close:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.tooltip-popup {
+    cursor: default;
+}
+
+/* Screen reader only text */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* ==========================================
+   12. LOADING STATES
+   ========================================== */
+
+.poll-btn.loading,
+.share-btn.loading {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.poll-btn.loading::after,
+.share-btn.loading::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    border: 2px solid white;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ==========================================
+   13. HOVER EFFECTS & MICRO-ANIMATIONS
+   ========================================== */
+
+.trend-row {
+    transition: background 0.2s;
+    padding: 0.5rem;
+    margin: -0.5rem 0 0.3rem 0;
+    border-radius: 6px;
+}
+
+.trend-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.indicator-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.indicator-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
+}
+
+/* ==========================================
+   14. PWA STANDALONE MODE
+   ========================================== */
+
+@media all and (display-mode: standalone) {
+    .share-notification {
+        bottom: calc(2rem + env(safe-area-inset-bottom));
+    }
+
+    .tooltip-popup {
+        max-width: calc(100vw - 40px);
+    }
+}
+
+/* ==========================================
+   15. PRINT STYLES
+   ========================================== */
+
+@media print {
+
+    .tooltip-popup,
+    .poll-buttons,
+    .persona-toggle,
+    .share-btn,
+    .countdown-badge {
+        display: none !important;
+    }
+
+    .poll-results {
+        display: block !important;
+    }
+}

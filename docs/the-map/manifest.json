@@ -1,0 +1,46 @@
+{
+  "id": "/daily-alpha-loop/the-map/",
+  "name": "The Map - Macro & TASI Trendsetter",
+  "short_name": "The Map",
+  "description": "Navigate global economic indicators, TASI markets, and crypto trends with AI-powered daily insights.",
+  "start_url": "/daily-alpha-loop/the-map/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "background_color": "#064e3b",
+  "theme_color": "#10b981",
+  "orientation": "portrait",
+  "scope": "/daily-alpha-loop/the-map/",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "finance",
+    "productivity",
+    "news"
+  ],
+  "shortcuts": [],
+  "screenshots": [],
+  "launch_handler": {
+    "client_mode": "auto"
+  },
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

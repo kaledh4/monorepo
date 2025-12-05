@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>The Frontier - Silicon Frontier Watch</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>THE FRONTIER</h1>
+            <div class="mission-status">
+                <div class="status-dot"></div>
+                <span>SILICON FRONTIER WATCH // DAY <span id="mission-day">0</span></span>
+                <button id="install-btn" class="lang-btn" style="display: none; margin-right: 10px;">INSTALL</button>
+                <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ... (rest of the file) ... -->
+
+    <script>
+        // ... (existing configuration) ...
+
+        // --- SERVICE WORKER & PWA INSTALL ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'inline-block';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt = null;
+            console.log('PWA was installed');
+        });
+    </script>
+
+    <div class="container">
+        <!-- Countdown Timers -->
+        <section class="countdown-section">
+            <h2 class="section-title">Critical Timeline</h2>
+            <div class="countdown-grid" id="timers"></div>
+        </section>
+
+        <!-- AI Briefing -->
+        <section class="ai-briefing">
+            <div class="briefing-header">
+                STRATEGIC BRIEFING
+                <div class="briefing-actions" style="margin-left: auto; display: flex; gap: 10px;">
+                    <button onclick="copyBriefing()" class="action-btn" title="Copy to Clipboard">📋 Copy</button>
+                    <button onclick="downloadBriefing()" class="action-btn" title="Download as .md">💾 Download</button>
+                </div>
+            </div>
+            <div class="briefing-content" id="ai-briefing-content">
+                <div class="loading">Analyzing scientific breakthroughs...</div>
+            </div>
+        </section>
+
+        <!-- Search -->
+        <div class="search-box">
+            <input type="text" id="filter-input" class="search-input"
+                placeholder="🔍 Search papers by keyword, domain, or technology...">
+        </div>
+
+        <!-- Feed Container -->
+        <div id="feed-container">
+            <div class="loading">Initializing data stream...</div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const MISSION_START = new Date("2025-11-24T00:00:00").getTime();
+        const DEADLINES = [
+            { name: "Resource ID", days: 90 },
+            { name: "Data Assets", days: 120 },
+            { name: "Robotics Integration", days: 240 },
+            { name: "Operating Capability", days: 270 }
+        ];
+
+        // --- ACTION BUTTONS ---
+        async function copyBriefing() {
+            const content = document.getElementById('ai-briefing-content').innerText;
+            try {
+                await navigator.clipboard.writeText(content);
+                showToast("Briefing copied to clipboard");
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showToast("Failed to copy", true);
+            }
+        }
+
+        async function copyHashtag(keyword) {
+            const tag = `#${keyword.trim()}`;
+            try {
+                await navigator.clipboard.writeText(tag);
+                showToast(`Copied: ${tag}`);
+            } catch (err) {
+                console.error('Failed to copy:', err);
+                showToast("Failed to copy", true);
+            }
+        }
+
+        function downloadBriefing() {
+            const content = document.getElementById('ai-briefing-content').innerText;
+            const date = new Date().toISOString().split('T')[0];
+            const filename = `AI_Briefing_${date}.md`;
+
+            const blob = new Blob([content], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast("Briefing downloaded");
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.right = '20px';
+            toast.style.background = isError ? 'rgba(255, 0, 0, 0.9)' : 'rgba(0, 255, 136, 0.9)';
+            toast.style.color = '#000';
+            toast.style.padding = '1rem 2rem';
+            toast.style.borderRadius = '8px';
+            toast.style.fontFamily = "'JetBrains Mono', monospace";
+            toast.style.fontWeight = 'bold';
+            toast.style.zIndex = '2000';
+            toast.style.animation = 'slideIn 0.3s ease-out';
+            toast.innerText = message;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease-in';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        `;
+        document.head.appendChild(style);
+
+        // --- MARKDOWN PARSER ---
+        function parseMarkdown(text) {
+            if (!text) return "";
+
+            // Convert markdown to HTML - process headers BEFORE line breaks
+            return text
+                // Headers (must process from most specific to least specific, BEFORE <br> tags)
+                .replace(/^### (.*$)/gim, '<h4>$1</h4>')
+                .replace(/^## (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^# (.*$)/gim, '<h2>$1</h2>')
+                // Bold and italic
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                // Lists
+                .replace(/^- (.*?)(?=\n|$)/gm, '<li>$1</li>')
+                .replace(/(<li>.*?<\/li>)+/gs, '<ul>$&</ul>')
+                // Blockquotes
+                .replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
+                // Links
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
+                // Code
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                // Line breaks (done AFTER headers)
+                .replace(/\n/g, '<br>');
+        }
+
+        // --- COUNTDOWN LOGIC ---
+        function updateTimers() {
+            const now = new Date().getTime();
+            const missionDay = Math.floor((now - MISSION_START) / (1000 * 60 * 60 * 24));
+            document.getElementById('mission-day').innerText = missionDay > 0 ? missionDay : "PRE-LAUNCH";
+
+            const grid = document.getElementById('timers');
+            grid.innerHTML = '';
+
+            DEADLINES.forEach(d => {
+                const target = MISSION_START + (d.days * 24 * 60 * 60 * 1000);
+                const diff = target - now;
+                const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+                const div = document.createElement('div');
+                div.className = 'timer-card';
+                const colorClass = daysLeft < 30 ? 'warning' : '';
+                const displayVal = daysLeft < 0 ? 'COMPLETE' : daysLeft + ' days';
+
+                div.innerHTML = `
+                <div class="timer-label">${d.name}</div>
+                <div class="timer-val ${colorClass}">${displayVal}</div>
+            `;
+                grid.appendChild(div);
+            });
+        }
+
+        // --- STATE ---
+        let currentLang = 'en';
+        let briefingData = { en: "", ar: "" };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.getElementById('lang-toggle').innerText = currentLang.toUpperCase();
+            renderBriefing();
+        }
+
+        function renderBriefing() {
+            const container = document.getElementById('ai-briefing-content');
+            let content = briefingData[currentLang];
+
+            if (!content) {
+                container.innerHTML = "<p><em>Content unavailable for this language.</em></p>";
+                return;
+            }
+
+            // Set direction
+            container.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+            container.style.textAlign = currentLang === 'ar' ? 'right' : 'left';
+
+            // Process content
+            // Handle BLUF sections (English only or if preserved)
+            if (content.includes("BLUF:")) {
+                content = content.replace(/BLUF: (.*?)(?=\n|$)/g, '<div class="bluf"><strong>BLUF:</strong> $1</div>');
+            }
+
+            // Handle confidence scores - fix spacing
+            content = content.replace(/\(\s*(\d+)%\s*confidence\)/g, '(<span class="confidence-badge">$1%</span>)');
+            content = content.replace(/\(\s*(\d+)%\s*\)/g, '(<span class="confidence-badge">$1%</span>)');
+
+            // Handle stock tickers
+            content = content.replace(/\(([\w-]+)\):/g, '(<span class="ticker">$1</span>):');
+            content = content.replace(/\(([\w-]+\.SR)\):/g, '(<span class="ticker">$1</span>):'); // Support Saudi Tickers
+
+            // Handle Trending Keywords Section (English header)
+            const keywordSectionRegex = /## 🏷️ TRENDING KEYWORDS\n(.*?)(?=\n##|\n$|$)/s;
+            const keywordMatch = content.match(keywordSectionRegex);
+
+            if (keywordMatch) {
+                const keywords = keywordMatch[1].split(',').map(k => k.trim()).filter(k => k);
+                const keywordHtml = `
+                    <h3>🏷️ TRENDING KEYWORDS</h3>
+                    <div class="keywords-container">
+                        ${keywords.map(k => `<div class="keyword-chip" onclick="copyHashtag('${k.replace(/'/g, "\\'")}')">${k}</div>`).join('')}
+                    </div>
+                `;
+                content = content.replace(keywordSectionRegex, keywordHtml);
+            }
+
+            // Parse markdown
+            container.innerHTML = parseMarkdown(content);
+        }
+
+        // --- DATA FETCHING & RENDERING ---
+        async function loadData() {
+            // Try multiple data paths for flexibility
+            const dataPaths = [
+                'mission_data.json',
+                './mission_data.json',
+                './data/latest.json',
+                '../data/the-frontier/latest.json'
+            ];
+
+            let data = null;
+            for (const dataPath of dataPaths) {
+                try {
+                    const response = await fetch(dataPath);
+                    if (response.ok) {
+                        data = await response.json();
+                        console.log(`Data loaded from: ${dataPath}`);
+                        break;
+                    }
+                } catch (e) {
+                    console.debug(`Path ${dataPath} failed, trying next...`);
+                }
+            }
+
+            if (!data) {
+                console.error("Error loading data: Could not load from any path");
+                const errorMessage =
+                    "<p><em>AI strategic briefing is temporarily unavailable. Research data is current and being collected.</em></p>" +
+                    "<p><strong>Tip:</strong> To enable AI analysis, set up your OpenRouter API key as described in the README.</p>";
+                document.getElementById('ai-briefing-content').innerHTML = errorMessage;
+                document.getElementById('feed-container').innerHTML =
+                    '<div class="loading">⚠️ Failed to load mission data.</div>';
+                return;
+            }
+
+            try {
+                // Debug logging
+                console.log("Data loaded:", data);
+
+                // Render AI Briefing
+                const briefingContainer = document.getElementById('ai-briefing-content');
+
+                if (data.ai_briefing) {
+                    if (data.ai_briefing.startsWith("*AI analysis temporarily unavailable")) {
+                        const fallbackContent =
+                            "<p><em>AI strategic briefing is temporarily unavailable. Research data is current and being collected.</em></p>" +
+                            "<p><strong>Tip:</strong> To enable AI analysis, set up your OpenRouter API key as described in the README.</p>";
+                        briefingContainer.innerHTML = fallbackContent;
+                        briefingData.en = fallbackContent;
+                    } else {
+                        // Split English and Arabic
+                        const parts = data.ai_briefing.split('<<<ARABIC_TRANSLATION>>>');
+                        briefingData.en = parts[0].trim();
+                        briefingData.ar = parts.length > 1 ? parts[1].trim() : "";
+
+                        renderBriefing();
+                        console.log("Updated with AI briefing content");
+                    }
+                } else {
+                    const fallbackContent =
+                        "<p><em>AI strategic briefing is temporarily unavailable. Research data is current and being collected.</em></p>" +
+                        "<p><strong>Tip:</strong> To enable AI analysis, set up your OpenRouter API key as described in the README.</p>";
+                    briefingContainer.innerHTML = fallbackContent;
+                }
+
+                // Render Feed
+                renderFeed(data.domains);
+            } catch (e) {
+                console.error("Error loading data:", e);
+                const errorMessage =
+                    "<p><em>AI strategic briefing is temporarily unavailable. Research data is current and being collected.</em></p>" +
+                    "<p><strong>Tip:</strong> To enable AI analysis, set up your OpenRouter API key as described in the README.</p>";
+                document.getElementById('ai-briefing-content').innerHTML = errorMessage;
+                document.getElementById('feed-container').innerHTML =
+                    '<div class="loading">⚠️ Failed to load mission data.</div>';
+            }
+        }
+
+        function renderFeed(domains) {
+            const container = document.getElementById('feed-container');
+            container.innerHTML = '';
+
+            Object.keys(domains).forEach(domain => {
+                const info = domains[domain];
+
+                const section = document.createElement('div');
+                section.className = 'domain-section';
+
+                let papersHTML = '';
+                info.recent_papers.forEach(p => {
+                    papersHTML += `
+                    <div class="paper-card searchable">
+                        <div class="paper-date">${p.date}</div>
+                        <a href="${p.link}" target="_blank" class="paper-title">${p.title}</a>
+                        <div class="paper-summary">${p.summary}</div>
+                        <div style="display:none">${domain}</div>
+                    </div>
+                `;
+                });
+
+                section.innerHTML = `
+                <div class="domain-header">
+                    <div class="domain-title">${domain}</div>
+                    <div class="stat-badge">${info.total_volume.toLocaleString()} papers</div>
+                </div>
+                <div class="papers-grid">${papersHTML}</div>
+            `;
+                container.appendChild(section);
+            });
+        }
+
+        // --- FILTERING ---
+        document.getElementById('filter-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.paper-card');
+
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.classList.toggle('hidden', !text.includes(term));
+            });
+        });
+
+        // --- INITIALIZATION ---
+        // Add a small delay to ensure DOM is fully loaded
+        setTimeout(() => {
+            updateTimers();
+            setInterval(updateTimers, 60000); // Update every minute
+            loadData();
+        }, 100);
+
+        // --- SERVICE WORKER ---
+        /*
+        if ('serviceWorker' in navigator) {
+            // Add a delay before registering the service worker
+            setTimeout(() => {
+                navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+                    .then(registration => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                        // Force update check
+                        registration.update();
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            }, 1000);
+        }
+        */
+    </script>
+
+</body>
+
+</html>
