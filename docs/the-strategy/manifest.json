@@ -21,7 +21,12 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["finance", "news", "business", "productivity"],
+  "categories": [
+    "finance",
+    "news",
+    "business",
+    "productivity"
+  ],
   "screenshots": [],
   "shortcuts": [
     {
@@ -29,8 +34,18 @@
       "short_name": "Digest",
       "description": "View today's market digest",
       "url": "./index.html#digest",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
-  "prefer_related_applications": false
+  "prefer_related_applications": false,
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ]
 }

@@ -21,14 +21,23 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["finance", "productivity", "business"],
+  "categories": [
+    "finance",
+    "productivity",
+    "business"
+  ],
   "shortcuts": [
     {
       "name": "Daily Analysis",
       "short_name": "Analysis",
       "description": "View today's market analysis",
       "url": "./index.html#analysis",
-      "icons": [{ "src": "./icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "./icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ],
   "screenshots": [],
@@ -40,5 +49,10 @@
       "text": "text",
       "url": "url"
     }
-  }
+  },
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ]
 }
