@@ -56,22 +56,36 @@ function formatTimestamp(timestamp) {
 
 async function loadDashboardData(dashboardId) {
     const paths = [
-        `../../data/${dashboardId}/latest.json`,
+        // 1. GitHub Pages absolute path (Most reliable for production)
+        `/daily-alpha-loop/data/${dashboardId}/latest.json`,
+        // 2. Standard relative path (Works for local server and some deployments)
         `../data/${dashboardId}/latest.json`,
-        `./data/latest.json`,
-        `/daily-alpha-loop/data/${dashboardId}/latest.json`
+        // 3. Full URL fallback (If relative paths fail)
+        `https://kaledh4.github.io/daily-alpha-loop/data/${dashboardId}/latest.json`,
+        // 4. Deep relative path (Fallback for nested structures)
+        `../../data/${dashboardId}/latest.json`,
+        // 5. Local data path (Fallback for dev)
+        `./data/latest.json`
     ];
+
+    console.log(`[Navigation] Loading data for ${dashboardId}...`);
 
     for (const path of paths) {
         try {
+            console.log(`[Navigation] Trying path: ${path}`);
             const response = await fetch(`${path}?t=${Date.now()}`);
             if (response.ok) {
-                return await response.json();
+                const data = await response.json();
+                console.log(`[Navigation] Successfully loaded data from ${path}`);
+                return data;
+            } else {
+                console.warn(`[Navigation] Failed to load from ${path}: ${response.status} ${response.statusText}`);
             }
         } catch (e) {
-            console.debug(`Failed to load from ${path}`);
+            console.warn(`[Navigation] Error loading from ${path}:`, e);
         }
     }
 
+    console.error(`[Navigation] All data paths failed for ${dashboardId}`);
     return null;
 }
