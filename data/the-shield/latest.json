@@ -3,7 +3,7 @@
   "name": "The Shield",
   "role": "Risk Environment",
   "mission": "Detect global risk pressure, cross-asset stress, volatility clusters, and fragility vectors.",
-  "last_update": "2025-12-05 11:25:05 UTC",
+  "last_update": "2025-12-05 12:02:30 UTC",
   "scoring": {
     "risk_level": 14,
     "fragility": 8.1,
@@ -22,12 +22,12 @@
     },
     {
       "name": "USD/JPY",
-      "value": "155.13",
+      "value": "155.12",
       "signal": "CRITICAL SHOCK"
     },
     {
       "name": "USD/CNH",
-      "value": "7.0682",
+      "value": "7.0685",
       "signal": "NORMAL"
     },
     {
@@ -42,7 +42,7 @@
     },
     {
       "name": "VIX",
-      "value": "15.81",
+      "value": "15.82",
       "signal": "NORMAL"
     },
     {

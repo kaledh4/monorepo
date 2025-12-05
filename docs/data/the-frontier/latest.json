@@ -187,31 +187,27 @@
   },
   "breakthroughs": [
     {
-      "title": "Decoy-state quantum key distribution over 227 km with frequency-converted telecom single-photon source",
-      "why_it_matters": "Achieves long-distance quantum encryption in real-world fiber infrastructure, critical for secure communication networks."
+      "title": "Decoy-State Quantum Key Distribution (QKD) over 227 km with Telecom-Ready Single-Photon Source",
+      "why_it_matters": "This real-world quantum communication breakthrough solves practical limitations in long-distance secure key exchange while integrating with existing telecom infrastructure. It enables quantum network nodes to operate at data-center optical wavelengths, making quantum internet deployment feasible without requiring exotic photon sources."
     },
     {
-      "title": "Universal Weight Subspace Hypothesis in AI",
-      "why_it_matters": "Theoretical framework to understand generalization in neural networks, enabling more efficient and interpretable AI models."
+      "title": "Probabilistic Assembly and Uncertainty Quantification of Polyploid Haplotypes",
+      "why_it_matters": "This solves a 15-year-old computational biology challenge by providing a rigorous framework for assembling polyploid genomes (organisms with four or more genome copies). The breakthrough enables accurate reconstruction of complex genomic architectures critical for crop improvement and disease research."
     },
     {
-      "title": "NeuralRemaster: Phase-Preserving Diffusion for Structure-Aligned Generation",
-      "why_it_matters": "Advances in generating high-fidelity 3D structures from multimodal data, accelerating drug discovery and materials science."
+      "title": "Universal Weight Subspace Hypothesis for Neural Network Training",
+      "why_it_matters": "This theoretical advance identifies a geometric framework that generalizes across architectures, revealing how networks converge to subspace-optimal solutions. It provides a foundation for understanding training dynamics in large language models (LLMs) and could accelerate stable, sample-efficient training."
     },
     {
-      "title": "pHapCompass: Probabilistic Assembly and Uncertainty Quantification",
-      "why_it_matters": "Revolutionizes polyploid genome analysis by resolving phase-ambiguous haplotypes in crops like wheat, boosting agricultural genomics."
+      "title": "Phase-Preserving Diffusion Model for Structure-Aligned Video Generation (NeuralRemaster)",
+      "why_it_matters": "By preserving temporal phase information during diffusion denoising, this work enables physics-aligned video synthesis where subsequent frames maintain temporal coherence with initial inputs. This bridges synthetic media with physical system analysis applications."
     },
     {
-      "title": "Pump Free Microwave-Optical Quantum Transduction",
-      "why_it_matters": "Enables low-energy quantum signal conversion, crucial for scalable quantum communication and sensing systems."
-    },
-    {
-      "title": "Deep Infant Brain Segmentation from Multi-Contrast MRI",
-      "why_it_makes": "Improves early detection of neurodevelopmental disorders through automated fetal brain analysis, accelerating medical diagnostics."
+      "title": "Axionic Tunneling from a Topological Kondo Insulator NE",
+      "why_it_matters": "The experimental identification of axionic tunneling effects opens a path toward axion-based electronic circuits that could operate at room temperature. This bridges quantum field theory with practical device engineering."
     }
   ],
-  "ai_analysis": "Quantum computing and advanced manufacturing show the strongest frontier progress with experimental and theoretical leaps (e.g., quantum key distribution, spin qubit advancements). AI breakthroughs focus on interpretability and alignment, while biotechnology and neurotech hit critical milestones in data resolution. Robotics and materials science integration (e.g., physics-aligned video generation) signals interdisciplinary convergence as a frontier area.",
+  "ai_analysis": "While many AI/tech announcements hype incremental improvements, these represent true frontier leaps. Quantum breakthroughs bring us closer to practical QKD infrastructure; the polyploid haplotype paper resolves a decade-long sequencing bottleneck; and axionic tunneling merges esoteric physics with material science. Together, they demonstrate the ecosystem's subtle advancements in quantum, genomics, and semiconductor physics that underpin tomorrow's technologies.",
   "data_sources": [
     "xxxxxxxxx/shared_lib/ai_rnd",
     "xxxxxxxxx/shared_lib/quantum",

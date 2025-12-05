@@ -3,7 +3,7 @@
   "name": "The Shield",
   "role": "Risk Environment",
   "mission": "Detect global risk pressure, cross-asset stress, volatility clusters, and fragility vectors.",
-  "last_update": "2025-12-05 10:28:42 UTC",
+  "last_update": "2025-12-05 12:02:30 UTC",
   "scoring": {
     "risk_level": 14,
     "fragility": 8.1,
@@ -22,12 +22,12 @@
     },
     {
       "name": "USD/JPY",
-      "value": "155.07",
+      "value": "155.12",
       "signal": "CRITICAL SHOCK"
     },
     {
       "name": "USD/CNH",
-      "value": "7.0671",
+      "value": "7.0685",
       "signal": "NORMAL"
     },
     {
@@ -42,7 +42,7 @@
     },
     {
       "name": "VIX",
-      "value": "15.72",
+      "value": "15.82",
       "signal": "NORMAL"
     },
     {
@@ -51,7 +51,7 @@
       "signal": "NORMAL"
     }
   ],
-  "ai_analysis": "The market shows low systemic fragility overall, with most metrics in normal ranges. However, the USD/JPY's 'CRITICAL SHOCK' signal highlights acute stress, likely driven by geopolitical or interest rate dynamics. While bond markets (e.g., Treasury bid-to-cover, CBON ETF) and volatility indices (VIX, MOVE) remain stable, the sharp yen move warrants close monitoring for spillover effects. Watch for sustained USD/JPY volatility and any correlated shifts in global risk sentiment.",
+  "ai_analysis": "AI analysis unavailable",
   "data_sources": [
     "xxxxxxxxx/shared_lib/global_risk",
     "xxxxxxxxx/shared_lib/volatility_matrix",

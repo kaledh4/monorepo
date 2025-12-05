@@ -8,10 +8,10 @@
     "momentum": 5,
     "setup_quality": 6.5
   },
-  "btc_price": 91510.296875,
-  "eth_price": 3138.451416015625,
+  "btc_price": 91395.03125,
+  "eth_price": 3133.16064453125,
   "momentum": "Neutral",
-  "rsi": 38.82999731103668,
+  "rsi": 38.73568077300704,
   "trend": "Bearish",
   "fear_and_greed": {
     "value": 28,

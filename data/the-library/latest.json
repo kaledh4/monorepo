@@ -8,6 +8,7 @@
     "uncertainty": 0.2
   },
   "summaries": [],
+  "ai_analysis": "Analysis temporarily unavailable",
   "data_sources": [
     "xxxxxxxxx/shared_lib/ai_rnd_tracker",
     "xxxxxxxxx/shared_lib/quantum_papers",
