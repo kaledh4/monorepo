@@ -130,6 +130,9 @@ class DataStore:
 # Global data store instance
 store = DataStore()
 
+# Global flag to track quota status
+AI_QUOTA_EXCEEDED = False
+
 # ========================================
 # Fetch Functions (Call ONCE)
 # ========================================
@@ -390,6 +393,16 @@ def fetch_arxiv_papers():
 
 def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int = 1500) -> Optional[str]:
     """Call AI model using ONLY Gemini (Google) as requested."""
+    global AI_QUOTA_EXCEEDED
+    
+    if AI_QUOTA_EXCEEDED:
+        logger.warning("  ⚠️ AI Quota previously exceeded. Skipping AI call.")
+        return None
+
+    # Check for global disable flag from args (if available in scope, otherwise rely on main passing it down or env var)
+    if os.environ.get('DISABLE_AI') == 'true':
+        logger.info("  ℹ️ AI disabled via flag.")
+        return None
     
     if not REQUESTS_AVAILABLE:
         logger.warning("AI not available (no requests library)")
@@ -422,6 +435,9 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
         models_to_try = ['gemini-2.5-pro', 'gemini-1.5-pro', 'gemini-1.5-flash']
         
         for model in models_to_try:
+            if AI_QUOTA_EXCEEDED:
+                break
+
             try:
                 url = f'https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={gemini_key}'
                 response = requests.post(url, json=payload, timeout=60)
@@ -432,6 +448,10 @@ def call_ai(prompt: str, system_prompt: str, models: List[str], max_tokens: int 
                         content = result['candidates'][0]['content']['parts'][0]['text']
                         logger.info(f"  ✅ Success with {model}!")
                         return content
+                elif response.status_code == 429:
+                    logger.error(f"  ⛔ {model} 429 Quota Exceeded. Disabling AI for remainder of run.")
+                    AI_QUOTA_EXCEEDED = True
+                    return None
                 else:
                     logger.warning(f"  {model} failed: {response.status_code} - {response.text[:100]}")
             except Exception as e:
@@ -1184,7 +1204,12 @@ def main():
     parser = argparse.ArgumentParser(description='Unified Data Fetcher V2 for Daily Alpha Loop')
     parser.add_argument('--all', action='store_true', help='Run for all dashboards (default)')
     parser.add_argument('--app', type=str, help='Run for specific dashboard (e.g., the-shield)')
+    parser.add_argument('--no-ai', action='store_true', help='Disable AI generation to save quota')
     args = parser.parse_args()
+
+    # Set env var for no-ai so it's accessible globally if needed, or just rely on logic
+    if args.no_ai:
+        os.environ['DISABLE_AI'] = 'true'
 
     # Default to all if no specific app is requested
     run_all = args.all or not args.app
