@@ -34,7 +34,7 @@ function renderScoring(scoring) {
 
     return `
         <div class="content-card">
-            <h2>📊 Core Metrics</h2>
+            <h2><img src="../static/icons/icons8-strategy-48.png" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"> Core Metrics</h2>
             <div class="data-grid">
                 ${Object.entries(scoring).map(([key, value]) => `
                     <div class="data-section">
@@ -52,7 +52,7 @@ function renderDataSources(sources) {
 
     return `
         <div class="content-card" style="margin-top: 20px;">
-            <h2>🔌 Data Sources</h2>
+            <h2><img src="../static/icons/icons8-map-48.png" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"> Data Sources</h2>
             <div style="display: flex; flex-wrap: wrap; gap: 10px;">
                 ${sources.map(source => `
                     <span class="source-badge">${source.split('/').pop()}</span>
@@ -65,7 +65,7 @@ function renderDataSources(sources) {
 function renderAIAnalysis(analysis) {
     return `
         <div class="content-card" style="margin-top: 20px; border-color: #48bb78;">
-            <h2 style="color: #48bb78; border-color: #48bb78;">🤖 AI Analysis</h2>
+            <h2 style="color: #48bb78; border-color: #48bb78;"><img src="../static/icons/icons8-ai-48.png" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"> AI Analysis</h2>
             <div class="data-text" style="font-size: 1.2rem; white-space: pre-line;">
                 ${analysis || 'Analysis temporarily unavailable. The system is gathering more data.'}
             </div>

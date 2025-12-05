@@ -70,6 +70,9 @@ jobs:
           # Copy data directory to docs so apps can access it
           cp -r data docs/data
 
+          # Copy static directory to docs (Fixes missing icons)
+          cp -r static docs/static
+
           # Use the redirect page that sends users to the-commander
           cp static/redirect-index.html docs/index.html
 
