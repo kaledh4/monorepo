@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'the-commander-1764920831894';
+const CACHE_NAME = 'the-commander-1764921322235';
 const ASSETS_TO_CACHE = [
   "./",
   "./index.html",
