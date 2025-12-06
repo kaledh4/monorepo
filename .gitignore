@@ -48,3 +48,12 @@ Thumbs.db
 *.jks
 signing-key-info.txt
 shared/Commander - Google Play package/
+
+# Environment & Local Development
+.env
+.env.local
+.env.*.local
+test_*.py
+*.pyc
+__pycache__/
+.pytest_cache/

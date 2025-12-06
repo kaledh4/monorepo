@@ -14,9 +14,12 @@ function renderNavigation(currentDashboard) {
     const navHTML = DASHBOARDS.map(dash => {
         const isActive = dash.id === currentDashboard;
         const url = dash.id === 'the-commander' ? '../the-commander/' : `../${dash.id}/`;
+        const seamlessUrl = url + '?mode=seamless';
 
         return `
-      <a href="${url}" class="nav-card ${isActive ? 'active' : ''}">
+      <a href="${url}" 
+         onclick="handleNavClick(event, '${seamlessUrl}', '${dash.name}')"
+         class="nav-card ${isActive ? 'active' : ''}">
         <img src="${dash.icon}" alt="${dash.name}" class="nav-icon" style="width: 32px; height: 32px; margin-bottom: 8px;">
         <h3>${dash.name}</h3>
         <p>${dash.mission}</p>
@@ -26,6 +29,59 @@ function renderNavigation(currentDashboard) {
 
     return `<div class="dashboard-nav">${navHTML}</div>`;
 }
+
+// Seamless Navigation Logic
+window.handleNavClick = function(event, url, title) {
+    // Prevent default navigation to keep the PWA shell intact
+    event.preventDefault();
+    
+    let overlay = document.getElementById('seamless-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'seamless-overlay';
+        overlay.innerHTML = `
+            <div id="seamless-overlay-header">
+                <button id="seamless-back-btn" onclick="closeSeamlessOverlay()">
+                    ← Back to Commander
+                </button>
+                <span id="seamless-title" style="color: white; font-weight: bold;"></span>
+                <div style="width: 80px;"></div> <!-- Spacer for centering -->
+            </div>
+            <iframe id="seamless-frame" src=""></iframe>
+        `;
+        document.body.appendChild(overlay);
+    }
+    
+    document.getElementById('seamless-title').innerText = title;
+    const frame = document.getElementById('seamless-frame');
+    frame.src = url;
+    
+    overlay.style.display = 'flex';
+    
+    // Push state so back button works
+    history.pushState({ seamless: true }, title, '#seamless');
+};
+
+window.closeSeamlessOverlay = function() {
+    const overlay = document.getElementById('seamless-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+        document.getElementById('seamless-frame').src = ''; // Unload to save memory
+    }
+    // Handle history if we manually closed it
+    if (history.state && history.state.seamless) {
+        history.back();
+    }
+};
+
+// Handle browser back button
+window.addEventListener('popstate', (event) => {
+    const overlay = document.getElementById('seamless-overlay');
+    if (overlay && overlay.style.display === 'flex') {
+        overlay.style.display = 'none';
+        document.getElementById('seamless-frame').src = '';
+    }
+});
 
 function getSourceBadge(dashboardId) {
     const dash = DASHBOARDS.find(d => d.id === dashboardId);

@@ -55,13 +55,30 @@ try:
 except ImportError:
     logger.warning("⚠️ python-dotenv not installed. Environment variables must be set manually.")
 
-# API Keys
+# API Keys - Support multiple naming conventions
+# GitHub Actions vs Local .env compatibility
+def get_api_key(primary_name: str, *alternative_names: str) -> Optional[str]:
+    """Get API key from environment, trying multiple possible variable names."""
+    for name in [primary_name] + list(alternative_names):
+        value = os.environ.get(name)
+        if value:
+            logger.debug(f"✅ Found API key: {name}")
+            return value
+    logger.debug(f"❌ API key not found. Tried: {primary_name}, {', '.join(alternative_names)}")
+    return None
+
 API_KEYS = {
-    'OPENROUTER': os.environ.get('OPENROUTER_KEY') or os.environ.get('OPENROUTER_API_KEY'),
-    'NEWS_API': os.environ.get('NEWS_API_KEY'),
-    'FRED': os.environ.get('FRED_API_KEY'),
-    'ALPHA_VANTAGE': os.environ.get('ALPHA_VANTAGE_KEY'),
+    'OPENROUTER': get_api_key('OPENROUTER_KEY', 'OPENROUTER_API_KEY', 'OPENROUTER'),
+    'NEWS_API': get_api_key('NEWS_API_KEY', 'NEWS_API'),
+    'FRED': get_api_key('FRED_API_KEY', 'FRED_KEY', 'FRED'),
+    'ALPHA_VANTAGE': get_api_key('ALPHA_VANTAGE_KEY', 'ALPHAVANTAGE_KEY', 'ALPHA_VANTAGE'),
 }
+
+# Log API key status (without showing actual keys)
+logger.info("🔑 API Key Status:")
+for key_name, key_value in API_KEYS.items():
+    status = "✅ Set" if key_value else "❌ Missing"
+    logger.info(f"  {key_name}: {status}")
 
 # Third-party imports
 try:

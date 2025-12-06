@@ -136,8 +136,16 @@ async function initDashboard(dashboardName) {
     const data = await loadDashboardData(dashboardName);
 
     // Render Navigation (assuming navigation.js is loaded)
+    // Render Navigation (assuming navigation.js is loaded)
     if (window.renderNavigation) {
-        document.getElementById('nav').innerHTML = window.renderNavigation(dashboardName);
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('mode') !== 'seamless') {
+            document.getElementById('nav').innerHTML = window.renderNavigation(dashboardName);
+        } else {
+            // In seamless mode, hide the nav container to avoid spacing issues
+            const navEl = document.getElementById('nav');
+            if (navEl) navEl.style.display = 'none';
+        }
     }
 
     if (!data) {
